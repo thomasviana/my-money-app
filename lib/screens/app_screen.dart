@@ -29,33 +29,49 @@ class _MainAppScreenState extends State<MainAppScreen> {
     }
   }
 
-  List<Transaction> _userTransactions = [
-/*     Transaction(title: 'title', tag: 'tag', amount: 100, date: DateTime.now()),
-    Transaction(title: 'title', tag: 'tag', amount: 100, date: DateTime.now()),
-    Transaction(title: 'title', tag: 'tag', amount: 100, date: DateTime.now()),
-    Transaction(title: 'title', tag: 'tag', amount: 100, date: DateTime.now()),
-    Transaction(title: 'title', tag: 'tag', amount: 100, date: DateTime.now()) */
-  ];
+  List<Transaction> _userTransactions = [];
+  double totalExpenses = 0;
 
   void _addNewTx(String title, String tag, double amount) {
     var newTx = Transaction(
-      title: title,
-      tag: tag,
-      amount: amount,
-      date: DateTime.now(),
-    );
+        title: title, tag: tag, amount: amount, date: DateTime.now());
     setState(() {
       _userTransactions.add(newTx);
+    });
+    totalExpenses = 0;
+    for (var i = 0; i < _userTransactions.length; i++) {
+      var newValue = _userTransactions[i].amount;
+      totalExpenses += newValue;
+    }
+    newAmount.clear();
+    newConcept.clear();
+    newBudget.clear();
+  }
+
+  void _deleteTx() {
+    print('deleting 2');
+
+    setState(() {
+      _userTransactions.remove(_userTransactions[1]);
     });
   }
 
   @override
   Widget build(BuildContext context) {
     List<Widget> _screens = [
-      HomeScreen(),
-      TxList(transactions: _userTransactions),
-      TxList(transactions: _userTransactions),
+      HomeScreen(totalExpenses: totalExpenses),
+      TxList(
+        transactions: _userTransactions,
+        deleteTx: _deleteTx,
+      ),
+      TxList(
+        transactions: _userTransactions,
+        deleteTx: _deleteTx,
+      ),
     ];
+
+    print(totalExpenses);
+
     return Scaffold(
       body: _screens[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(

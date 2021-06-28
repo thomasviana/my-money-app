@@ -4,7 +4,9 @@ import 'package:my_money/constants.dart';
 
 class HomeScreen extends StatelessWidget {
   double totalIncomes = 100;
-  double totalExpenses = 50;
+  double totalExpenses = 0;
+
+  HomeScreen({required this.totalExpenses});
 
   @override
   Widget build(BuildContext context) {

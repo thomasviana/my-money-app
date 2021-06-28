@@ -184,7 +184,9 @@ class _AddRecordState extends State<AddRecord> {
                           ),
                           fixedSize: Size(0, 55),
                         ),
-                        onPressed: submitData,
+                        onPressed: () {
+                          submitData();
+                        },
                         child: Text(
                           'Add',
                           style: TextStyle(color: Colors.white, fontSize: 18),
