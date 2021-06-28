@@ -1,9 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:my_money/models/transaction.dart';
 
-// TextEditingController newAmount = TextEditingController();
+TextEditingController newAmount = TextEditingController();
+TextEditingController newConcept = TextEditingController();
+TextEditingController newBudget = TextEditingController();
 
+// ignore: must_be_immutable
 class AddRecord extends StatefulWidget {
+  late Function addTx;
+
+  AddRecord(this.addTx);
+
   @override
   _AddRecordState createState() => _AddRecordState();
 }
@@ -15,6 +23,15 @@ class _AddRecordState extends State<AddRecord> {
   };
 
   int? currentValue = 0;
+
+  void submitData() {
+    if (double.parse(newAmount.text).isNegative) {
+      return;
+    }
+
+    widget.addTx(newConcept.text, newBudget.text, double.parse(newAmount.text));
+    Navigator.of(context).pop();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,6 +69,7 @@ class _AddRecordState extends State<AddRecord> {
               ),
               SizedBox(height: 30),
               TextField(
+                controller: newAmount,
                 cursorColor: Colors.black45,
                 autofocus: true,
                 style: TextStyle(color: Colors.black),
@@ -71,15 +89,14 @@ class _AddRecordState extends State<AddRecord> {
                   ),
                 ),
                 textAlign: TextAlign.center,
-                onChanged: (value) {
-                  //
-                },
+                onSubmitted: (_) => submitData(),
                 keyboardType: TextInputType.numberWithOptions(decimal: true),
               ),
               SizedBox(
                 height: 30,
               ),
               TextField(
+                controller: newConcept,
                 cursorColor: Colors.black45,
                 autofocus: false,
                 style: TextStyle(color: Colors.black),
@@ -98,17 +115,15 @@ class _AddRecordState extends State<AddRecord> {
                     borderSide: BorderSide.none,
                   ),
                 ),
-                // controller: newTask,
                 textAlign: TextAlign.center,
-                onChanged: (value) {
-                  print(value);
-                },
+                onSubmitted: (_) => submitData(),
                 keyboardType: TextInputType.name,
               ),
               SizedBox(
                 height: 30,
               ),
               TextField(
+                controller: newBudget,
                 cursorColor: Colors.black45,
                 autofocus: false,
                 style: TextStyle(color: Colors.black),
@@ -129,9 +144,7 @@ class _AddRecordState extends State<AddRecord> {
                 ),
                 // controller: newTask,
                 textAlign: TextAlign.center,
-                onChanged: (value) {
-                  print(value);
-                },
+                onSubmitted: (_) => submitData(),
                 keyboardType: TextInputType.name,
               ),
               SizedBox(
@@ -151,10 +164,10 @@ class _AddRecordState extends State<AddRecord> {
                           fixedSize: Size(0, 55),
                         ),
                         onPressed: () {
-                          // Provider.of<TaskData>(context, listen: false)
-                          //     .modifyList(newTaskTitle!);
+                          newAmount.clear();
+                          newConcept.clear();
+                          newBudget.clear();
                           Navigator.pop(context);
-                          // newTask.clear();
                         },
                         child: Text(
                           'Cancel',
@@ -171,12 +184,7 @@ class _AddRecordState extends State<AddRecord> {
                           ),
                           fixedSize: Size(0, 55),
                         ),
-                        onPressed: () {
-                          // Provider.of<TaskData>(context, listen: false)
-                          //     .modifyList(newTaskTitle!);
-                          Navigator.pop(context);
-                          // newTask.clear();
-                        },
+                        onPressed: submitData,
                         child: Text(
                           'Add',
                           style: TextStyle(color: Colors.white, fontSize: 18),

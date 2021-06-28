@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_money/screens/add_record.dart';
 import 'package:my_money/screens/home_screen.dart';
 import 'package:my_money/screens/tx_list.dart';
+import 'package:my_money/models/transaction.dart';
 
 class MainAppScreen extends StatefulWidget {
   @override
@@ -23,19 +24,38 @@ class _MainAppScreenState extends State<MainAppScreen> {
         backgroundColor: Colors.transparent,
         isScrollControlled: true,
         context: context,
-        builder: (context) => AddRecord(),
+        builder: (context) => AddRecord(_addNewTx),
       );
     }
   }
 
-  List<Widget> _screens = [
-    HomeScreen(),
-    TxList(),
-    TxList(),
+  List<Transaction> _userTransactions = [
+/*     Transaction(title: 'title', tag: 'tag', amount: 100, date: DateTime.now()),
+    Transaction(title: 'title', tag: 'tag', amount: 100, date: DateTime.now()),
+    Transaction(title: 'title', tag: 'tag', amount: 100, date: DateTime.now()),
+    Transaction(title: 'title', tag: 'tag', amount: 100, date: DateTime.now()),
+    Transaction(title: 'title', tag: 'tag', amount: 100, date: DateTime.now()) */
   ];
+
+  void _addNewTx(String title, String tag, double amount) {
+    var newTx = Transaction(
+      title: title,
+      tag: tag,
+      amount: amount,
+      date: DateTime.now(),
+    );
+    setState(() {
+      _userTransactions.add(newTx);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+    List<Widget> _screens = [
+      HomeScreen(),
+      TxList(transactions: _userTransactions),
+      TxList(transactions: _userTransactions),
+    ];
     return Scaffold(
       body: _screens[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(

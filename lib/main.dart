@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:my_money/screens/welcome_screen.dart';
 import 'widgets/main_cards.dart';
@@ -30,7 +31,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => WelcomeScreen(),
         '/home': (context) => MainAppScreen(),
-        '/records': (context) => TxList(),
+        '/records': (context) => TxList(transactions: [],),
       },
     );
   }

@@ -3,8 +3,13 @@ import 'package:my_money/widgets/main_cards.dart';
 import 'package:my_money/constants.dart';
 
 class HomeScreen extends StatelessWidget {
+  double totalIncomes = 100;
+  double totalExpenses = 50;
+
   @override
   Widget build(BuildContext context) {
+    double myBalance = totalIncomes - totalExpenses;
+
     return SafeArea(
       child: Padding(
         padding: const EdgeInsets.all(20),
@@ -65,7 +70,7 @@ class HomeScreen extends StatelessWidget {
                             height: 10,
                           ),
                           Text(
-                            '\$ ${currency.format(500000)}',
+                            '\$ ${currency.format(myBalance)}',
                             style: TextStyle(color: Colors.black, fontSize: 20),
                           ),
                         ],
@@ -82,14 +87,14 @@ class HomeScreen extends StatelessWidget {
                   icon: (Icons.arrow_circle_down_rounded),
                   iconColor: Colors.green,
                   title: 'Incomes',
-                  value: 100,
+                  value: totalIncomes,
                 ),
                 SizedBox(width: 20),
                 MainCards(
                   icon: Icons.arrow_circle_up_rounded,
                   iconColor: Colors.red,
                   title: 'Expenses',
-                  value: 50,
+                  value: totalExpenses,
                 ),
               ],
             ),

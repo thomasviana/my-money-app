@@ -4,7 +4,7 @@ import 'package:my_money/constants.dart';
 
 class MainCards extends StatelessWidget {
   String? title;
-  int? value;
+  double? value;
   IconData icon;
   Color iconColor;
 
