@@ -108,8 +108,10 @@ class _MainAppScreenState extends State<MainAppScreen> {
             BottomNavigationBarItem(
                 icon: Icon(Icons.home_rounded), label: 'Home'),
             BottomNavigationBarItem(
-                icon: Icon(Icons.add_circle_rounded,
-                    size: 50, color: Theme.of(context).primaryIconTheme.color),
+                icon: Icon(
+                  Icons.add_circle_rounded,
+                  size: 50,
+                ),
                 label: ''),
             BottomNavigationBarItem(
                 icon: Icon(Icons.format_list_bulleted_rounded),
