@@ -2,23 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:my_money/models/transaction.dart';
 import 'package:intl/intl.dart';
 import 'package:my_money/constants.dart';
-import 'add_record.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
-// ignore: must_be_immutable
 class TxList extends StatelessWidget {
   final List<Transaction> transactions;
   final Function deleteTx;
+  // final Icon icon;
 
   TxList({required this.transactions, required this.deleteTx});
-
-  /*  = [
-/*     Transaction(title: 'title', tag: 'tag', amount: 100, date: DateTime.now()),
-    Transaction(title: 'title', tag: 'tag', amount: 100, date: DateTime.now()),
-    Transaction(title: 'title', tag: 'tag', amount: 100, date: DateTime.now()),
-    Transaction(title: 'title', tag: 'tag', amount: 100, date: DateTime.now()),
-    Transaction(title: 'title', tag: 'tag', amount: 100, date: DateTime.now()) */
-  ]; */
 
   final currency = NumberFormat("#,##0.00", "en_US");
 
@@ -37,19 +28,12 @@ class TxList extends StatelessWidget {
                 color: Colors.red,
                 icon: Icons.delete,
                 onTap: () {
-                  print('Delete');
-                  // ignore: unnecessary_statements
-                  deleteTx;
+                  deleteTx(transactions[index].id);
                 },
               ),
             ],
             child: Container(
               child: ListTile(
-                onLongPress: () {
-                  // ignore: unnecessary_statements
-                  deleteTx;
-                  print('deleting');
-                },
                 horizontalTitleGap: 20,
                 contentPadding: EdgeInsets.symmetric(horizontal: 30),
                 title: Text(transactions[index].title, style: kTitleTextStyle),
@@ -57,7 +41,9 @@ class TxList extends StatelessWidget {
                   transactions[index].tag,
                   style: kTagTextStyle,
                 ),
-                leading: Icon(Icons.forward),
+                leading: transactions[index].type == 'Expense'
+                    ? Icon(Icons.forward, color: Colors.red)
+                    : Icon(Icons.forward, color: Colors.green),
                 trailing: Text(
                     '\$ ${currency.format(transactions[index].amount)}',
                     style: kAmountTextStyle),

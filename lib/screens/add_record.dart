@@ -1,10 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:my_money/models/transaction.dart';
-
-TextEditingController newAmount = TextEditingController();
-TextEditingController newConcept = TextEditingController();
-TextEditingController newBudget = TextEditingController();
+import 'package:my_money/widgets/buttons_add_record.dart';
+import 'package:my_money/widgets/main_textfield.dart';
+import 'package:my_money/constants.dart';
 
 // ignore: must_be_immutable
 class AddRecord extends StatefulWidget {
@@ -17,6 +16,8 @@ class AddRecord extends StatefulWidget {
 }
 
 class _AddRecordState extends State<AddRecord> {
+  DateTime dateTime = DateTime.now();
+
   final Map<int, Widget> children = const <int, Widget>{
     0: Text('Expense'),
     1: Text('Income'),
@@ -24,14 +25,35 @@ class _AddRecordState extends State<AddRecord> {
 
   int? currentValue = 0;
 
-  void submitData() {
+  void _submitData() {
     if (double.parse(newAmount.text).isNegative) {
       return;
     }
-
-    widget.addTx(newConcept.text, newBudget.text, double.parse(newAmount.text));
+    widget.addTx(newConcept.text, newBudget.text, double.parse(newAmount.text),
+        currentValue == 0 ? 'Expense' : 'Income');
     Navigator.of(context).pop();
   }
+
+  void showSheet(
+    BuildContext context, {
+    required Widget child,
+    required VoidCallback onClicked,
+  }) =>
+      showCupertinoModalPopup(
+        context: context,
+        builder: (context) => CupertinoActionSheet(
+          actions: [
+            child,
+          ],
+          cancelButton: CupertinoActionSheetAction(
+            child: Text(
+              'Done',
+              style: TextStyle(color: Colors.amber),
+            ),
+            onPressed: onClicked,
+          ),
+        ),
+      );
 
   @override
   Widget build(BuildContext context) {
@@ -45,6 +67,19 @@ class _AddRecordState extends State<AddRecord> {
         ),
       );
     }
+
+    Widget buildDatePicker() => SizedBox(
+          height: 300,
+          child: CupertinoDatePicker(
+              backgroundColor: Colors.white,
+              initialDateTime: dateTime,
+              mode: CupertinoDatePickerMode.date,
+              onDateTimeChanged: (dateTime) {
+                setState(() {
+                  this.dateTime = dateTime;
+                });
+              }),
+        );
 
     return makeDismissible(
       child: DraggableScrollableSheet(
@@ -68,130 +103,75 @@ class _AddRecordState extends State<AddRecord> {
                 groupValue: currentValue,
               ),
               SizedBox(height: 30),
-              TextField(
+              MainTextField(
                 controller: newAmount,
-                cursorColor: Colors.black45,
-                autofocus: true,
-                style: TextStyle(color: Colors.black),
-                textAlignVertical: TextAlignVertical.center,
-                decoration: InputDecoration(
-                  hintText: 'Enter Amount',
-                  hintStyle: TextStyle(color: Colors.black45),
-                  prefixIcon: Icon(
-                    Icons.attach_money_rounded,
-                    color: Colors.black,
-                  ),
-                  fillColor: Colors.black12,
-                  filled: true,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: BorderSide.none,
-                  ),
-                ),
-                textAlign: TextAlign.center,
-                onSubmitted: (_) => submitData(),
+                prefixIcon:
+                    Icon(Icons.attach_money_rounded, color: Colors.black),
+                hintText: 'Enter Amount',
                 keyboardType: TextInputType.numberWithOptions(decimal: true),
+                onSubmit: _submitData,
               ),
               SizedBox(
                 height: 30,
               ),
-              TextField(
+              MainTextField(
                 controller: newConcept,
-                cursorColor: Colors.black45,
-                autofocus: false,
-                style: TextStyle(color: Colors.black),
-                textAlignVertical: TextAlignVertical.center,
-                decoration: InputDecoration(
-                  hintText: 'Enter Concept',
-                  hintStyle: TextStyle(color: Colors.black45),
-                  prefixIcon: Icon(
-                    Icons.notes_rounded,
-                    color: Colors.black,
-                  ),
-                  fillColor: Colors.black12,
-                  filled: true,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: BorderSide.none,
-                  ),
-                ),
-                textAlign: TextAlign.center,
-                onSubmitted: (_) => submitData(),
+                prefixIcon: Icon(Icons.notes_rounded, color: Colors.black),
+                hintText: 'Enter Concept',
                 keyboardType: TextInputType.name,
+                onSubmit: _submitData,
               ),
               SizedBox(
                 height: 30,
               ),
-              TextField(
-                controller: newBudget,
-                cursorColor: Colors.black45,
-                autofocus: false,
-                style: TextStyle(color: Colors.black),
-                textAlignVertical: TextAlignVertical.center,
-                decoration: InputDecoration(
+              if (currentValue == 0)
+                MainTextField(
+                  controller: newBudget,
+                  prefixIcon:
+                      Icon(Icons.all_inbox_rounded, color: Colors.black),
                   hintText: 'Enter Budget',
-                  hintStyle: TextStyle(color: Colors.black45),
-                  prefixIcon: Icon(
-                    Icons.all_inbox_rounded,
-                    color: Colors.black,
-                  ),
-                  fillColor: Colors.black12,
-                  filled: true,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: BorderSide.none,
-                  ),
+                  keyboardType: TextInputType.name,
+                  onSubmit: _submitData,
                 ),
-                // controller: newTask,
-                textAlign: TextAlign.center,
-                onSubmitted: (_) => submitData(),
-                keyboardType: TextInputType.name,
-              ),
               SizedBox(
                 height: 30,
               ),
+              CupertinoButton(
+                  color: Colors.black12,
+                  child: Text('Enter Date'),
+                  onPressed: () {
+                    showSheet(
+                      context,
+                      child: buildDatePicker(),
+                      onClicked: () => Navigator.pop(context),
+                    );
+                  }),
+              if (currentValue == 0) SizedBox(height: 30),
               Container(
                 width: 300,
                 child: Row(
                   children: [
-                    Expanded(
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          primary: Colors.black26,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(40)),
-                          ),
-                          fixedSize: Size(0, 55),
-                        ),
-                        onPressed: () {
-                          newAmount.clear();
-                          newConcept.clear();
-                          newBudget.clear();
-                          Navigator.pop(context);
-                        },
-                        child: Text(
-                          'Cancel',
-                          style: TextStyle(color: Colors.white, fontSize: 18),
-                        ),
-                      ),
+                    ButtonAddRecord(
+                      color: Colors.black12,
+                      title: 'Cancel',
+                      onPress: () {
+                        newAmount.clear();
+                        newConcept.clear();
+                        newBudget.clear();
+                        Navigator.pop(context);
+                      },
                     ),
                     SizedBox(width: 15),
-                    Expanded(
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(40)),
-                          ),
-                          fixedSize: Size(0, 55),
-                        ),
-                        onPressed: () {
-                          submitData();
-                        },
-                        child: Text(
-                          'Add',
-                          style: TextStyle(color: Colors.white, fontSize: 18),
-                        ),
-                      ),
+                    ButtonAddRecord(
+                      color: Theme.of(context).accentColor,
+                      title: 'Add',
+                      onPress: () {
+                        _submitData();
+                        print('add');
+                        newAmount.clear();
+                        newConcept.clear();
+                        newBudget.clear();
+                      },
                     ),
                   ],
                 ),
