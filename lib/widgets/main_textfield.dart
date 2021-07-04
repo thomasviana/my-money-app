@@ -25,6 +25,7 @@ class MainTextField extends StatelessWidget {
         decoration: InputDecoration(
           hintText: hintText,
           hintStyle: TextStyle(color: Colors.black45),
+          hintTextDirection: TextDirection.ltr,
           prefixIcon: prefixIcon,
           fillColor: Colors.black12,
           filled: true,

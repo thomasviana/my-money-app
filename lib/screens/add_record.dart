@@ -6,8 +6,6 @@ import 'package:my_money/widgets/buttons_add_record.dart';
 import 'package:my_money/widgets/main_textfield.dart';
 import 'package:my_money/constants.dart';
 
-import '../utils.dart';
-
 // ignore: must_be_immutable
 class AddRecord extends StatefulWidget {
   late Function addTx;
@@ -26,14 +24,28 @@ class _AddRecordState extends State<AddRecord> {
     1: Text('Income'),
   };
 
+  final Map<int, Widget> incomeType = const <int, Widget>{
+    0: Text('Active Income'),
+    1: Text('Pasive Income'),
+  };
+
+  int? incomeTypeVal = 1;
   int? currentValue = 0;
+  String budgetTag = 'IA';
 
   void _submitData() {
     if (double.parse(newAmount.text).isNegative) {
       return;
     }
-    widget.addTx(newConcept.text, newBudget.text, double.parse(newAmount.text),
-        currentValue == 0 ? 'Expense' : 'Income');
+    if (currentValue == 0) {
+      budgetTag = newBudget.text;
+    }
+    if (currentValue == 1) {
+      incomeTypeVal == 0 ? budgetTag = 'AI' : budgetTag = 'PI';
+    }
+
+    widget.addTx(newConcept.text, budgetTag, double.parse(newAmount.text),
+        dateTime, currentValue == 0 ? 'Expense' : 'Income');
     Navigator.of(context).pop();
   }
 
@@ -51,9 +63,10 @@ class _AddRecordState extends State<AddRecord> {
     }
 
     Widget buildDatePicker() => SizedBox(
-          height: 300,
+          height: 150,
           child: CupertinoDatePicker(
-              backgroundColor: Colors.white,
+
+              // backgroundColor: Colors.white,
               initialDateTime: dateTime,
               mode: CupertinoDatePickerMode.dateAndTime,
               minimumDate: DateTime(DateTime.now().year, 2, 1),
@@ -64,8 +77,6 @@ class _AddRecordState extends State<AddRecord> {
                 });
               }),
         );
-
-    String pickedDate = DateTime.now().toString();
 
     return makeDismissible(
       child: DraggableScrollableSheet(
@@ -80,6 +91,7 @@ class _AddRecordState extends State<AddRecord> {
             controller: controller,
             children: [
               CupertinoSlidingSegmentedControl(
+                thumbColor: currentValue == 0 ? Colors.red : Colors.green,
                 children: children,
                 onValueChanged: (int? value) {
                   setState(() {
@@ -119,27 +131,19 @@ class _AddRecordState extends State<AddRecord> {
                   keyboardType: TextInputType.name,
                   onSubmit: _submitData,
                 ),
-              if (currentValue == 0) SizedBox(height: 30),
-              MainTextField(
-                controller: newBudget,
-                prefixIcon: Icon(Icons.date_range_rounded, color: Colors.black),
-                hintText: 'Enter Date',
-                keyboardType: TextInputType.name,
-                onSubmit: _submitData,
-              ),
-              SizedBox(height: 30),
-              CupertinoButton(
-                  color: Colors.black12,
-                  child: Text(pickedDate),
-                  onPressed: () {
-                    Utils.showSheet(context, child: buildDatePicker(),
-                        onClicked: () {
-                      final PickedDate = DateFormat.yMMMMd().format(dateTime);
-                      // Utils.showSnackBar(context, 'Selected $value');
-                      print(PickedDate);
-                      Navigator.pop(context);
+              if (currentValue == 1)
+                CupertinoSlidingSegmentedControl(
+                  children: incomeType,
+                  onValueChanged: (int? value) {
+                    setState(() {
+                      incomeTypeVal = value;
                     });
-                  }),
+                  },
+                  groupValue: incomeTypeVal,
+                ),
+              if (currentValue == 1) SizedBox(height: 30),
+              if (currentValue == 0) SizedBox(height: 30),
+              buildDatePicker(),
               SizedBox(height: 30),
               Container(
                 width: 300,

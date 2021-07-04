@@ -18,6 +18,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'My Money App',
       theme: ThemeData.dark().copyWith(
+        bottomSheetTheme: BottomSheetThemeData(backgroundColor: Colors.white),
         accentColor: Colors.amber,
         cardTheme: CardTheme(
           color: Colors.white,

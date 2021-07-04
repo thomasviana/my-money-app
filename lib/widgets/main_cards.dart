@@ -35,9 +35,15 @@ class MainCards extends StatelessWidget {
                   SizedBox(
                     height: 10,
                   ),
-                  Text(
-                    '\$ ${currency.format(value)}',
-                    style: TextStyle(color: Colors.black, fontSize: 15),
+                  Container(
+                    width: 90,
+                    child: FittedBox(
+                      fit: BoxFit.fill,
+                      child: Text('\$ ${currency.format(value)}',
+                          style: TextStyle(
+                            color: Colors.black,
+                          )),
+                    ),
                   ),
                 ],
               ),

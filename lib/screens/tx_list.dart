@@ -38,15 +38,21 @@ class TxList extends StatelessWidget {
                 contentPadding: EdgeInsets.symmetric(horizontal: 30),
                 title: Text(transactions[index].title, style: kTitleTextStyle),
                 subtitle: Text(
-                  transactions[index].tag,
-                  style: kTagTextStyle,
+                  DateFormat.yMMMMd().format(transactions[index].date),
+                  style: kDateTextStyle,
                 ),
                 leading: transactions[index].type == 'Expense'
                     ? Icon(Icons.forward, color: Colors.red)
                     : Icon(Icons.forward, color: Colors.green),
-                trailing: Text(
-                    '\$ ${currency.format(transactions[index].amount)}',
-                    style: kAmountTextStyle),
+                trailing: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text('\$ ${currency.format(transactions[index].amount)}',
+                        style: kAmountTextStyle),
+                    Text(transactions[index].tag, style: kTagTextStyle),
+                  ],
+                ),
               ),
             ),
           );

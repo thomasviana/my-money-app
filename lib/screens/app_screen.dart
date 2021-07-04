@@ -35,12 +35,13 @@ class _MainAppScreenState extends State<MainAppScreen> {
   double totalExpenses = 0;
   Icon selectedIcon = Icon(Icons.forward);
 
-  void _addNewTx(String title, String tag, double amount, String type) {
+  void _addNewTx(
+      String title, String tag, double amount, DateTime dateTime, String type) {
     var newTx = Transaction(
       title: title,
       tag: tag,
       amount: amount,
-      date: DateTime.now(),
+      date: dateTime,
       id: DateTime.now().toString(),
       type: type,
     );
