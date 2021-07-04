@@ -1,4 +1,6 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:my_money/screens/welcome_screen.dart';
 import 'widgets/main_cards.dart';
 import 'package:intl/intl.dart';
@@ -8,6 +10,13 @@ import 'package:my_money/screens/tx_list.dart';
 import 'screens/app_screen.dart';
 
 void main() {
+  // WidgetsFlutterBinding.ensureInitialized();
+  // SystemChrome.setPreferredOrientations(
+  //   [
+  //     DeviceOrientation.portraitUp,
+  //     DeviceOrientation.portraitDown,
+  //   ],
+  // );
   runApp(MyApp());
 }
 

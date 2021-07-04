@@ -35,7 +35,7 @@ class TxList extends StatelessWidget {
             child: Container(
               child: ListTile(
                 horizontalTitleGap: 20,
-                contentPadding: EdgeInsets.symmetric(horizontal: 30),
+                contentPadding: EdgeInsets.symmetric(horizontal: 25),
                 title: Text(transactions[index].title, style: kTitleTextStyle),
                 subtitle: Text(
                   DateFormat.yMMMMd().format(transactions[index].date),
@@ -44,14 +44,21 @@ class TxList extends StatelessWidget {
                 leading: transactions[index].type == 'Expense'
                     ? Icon(Icons.forward, color: Colors.red)
                     : Icon(Icons.forward, color: Colors.green),
-                trailing: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Text('\$ ${currency.format(transactions[index].amount)}',
-                        style: kAmountTextStyle),
-                    Text(transactions[index].tag, style: kTagTextStyle),
-                  ],
+                trailing: Container(
+                  width: 120,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Text(
+                            '\$ ${currency.format(transactions[index].amount)}',
+                            style: kAmountTextStyle),
+                      ),
+                      Text(transactions[index].tag, style: kTagTextStyle),
+                    ],
+                  ),
                 ),
               ),
             ),

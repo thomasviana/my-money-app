@@ -9,7 +9,7 @@ TextEditingController newConcept = TextEditingController();
 TextEditingController newBudget = TextEditingController();
 
 const kTitleTextStyle = TextStyle(
-  fontSize: 18,
+  fontSize: 15,
   fontWeight: FontWeight.bold,
 );
 const kTagTextStyle = TextStyle(fontSize: 15, color: Colors.white70);
