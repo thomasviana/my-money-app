@@ -30,24 +30,51 @@ class _MainAppScreenState extends State<MainAppScreen> {
     }
   }
 
-  List<Transaction> _userTransactions = [];
+  List<Transaction> _userTransactions = [
+    Transaction(
+      title: 'Salary',
+      tag: 'AI',
+      amount: 8000,
+      date: DateTime.now(),
+      id: DateTime.now().toString(),
+      type: 'Income',
+    ),
+    Transaction(
+      title: 'Gas',
+      tag: 'NEC',
+      amount: 100,
+      date: DateTime.now(),
+      id: DateTime.now().toString(),
+      type: 'Expense',
+    ),
+    Transaction(
+      title: 'Restaurant',
+      tag: 'DIV',
+      amount: 150,
+      date: DateTime.now(),
+      id: DateTime.now().toString(),
+      type: 'Expense',
+    ),
+    Transaction(
+      title: 'Rent',
+      tag: 'NEC',
+      amount: 2500,
+      date: DateTime.now(),
+      id: DateTime.now().toString(),
+      type: 'Expense',
+    ),
+  ];
   double totalIncomes = 0;
   double totalExpenses = 0;
   Icon selectedIcon = Icon(Icons.forward);
 
-  void _addNewTx(
-      String title, String tag, double amount, DateTime dateTime, String type) {
-    var newTx = Transaction(
-      title: title,
-      tag: tag,
-      amount: amount,
-      date: dateTime,
-      id: DateTime.now().toString(),
-      type: type,
-    );
-    setState(() {
-      _userTransactions.add(newTx);
-    });
+  @override
+  void initState() {
+    super.initState();
+    updateUI();
+  }
+
+  void updateUI() {
     totalIncomes = 0;
     totalExpenses = 0;
     for (var i = 0; i < _userTransactions.length; i++) {
@@ -64,6 +91,22 @@ class _MainAppScreenState extends State<MainAppScreen> {
         print(_userTransactions[i].type);
       }
     }
+  }
+
+  void _addNewTx(
+      String title, String tag, double amount, DateTime dateTime, String type) {
+    var newTx = Transaction(
+      title: title,
+      tag: tag,
+      amount: amount,
+      date: dateTime,
+      id: DateTime.now().toString(),
+      type: type,
+    );
+    setState(() {
+      _userTransactions.add(newTx);
+    });
+    updateUI();
     newAmount.clear();
     newConcept.clear();
     newBudget.clear();
@@ -72,11 +115,7 @@ class _MainAppScreenState extends State<MainAppScreen> {
   void _deleteTx(String id) {
     setState(() {
       _userTransactions.removeWhere((element) => element.id == id);
-      totalExpenses = 0;
-      for (var i = 0; i < _userTransactions.length; i++) {
-        var txValue = _userTransactions[i].amount;
-        totalExpenses += txValue;
-      }
+      updateUI();
     });
   }
 
