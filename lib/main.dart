@@ -8,6 +8,9 @@ import 'package:my_money/models/transaction.dart';
 import 'screens/home_screen.dart';
 import 'package:my_money/screens/tx_list.dart';
 import 'screens/app_screen.dart';
+import 'screens/login_screen.dart';
+import 'screens/welcome_screen.dart';
+import 'screens/registration_screen.dart';
 
 void main() {
   // WidgetsFlutterBinding.ensureInitialized();
@@ -36,10 +39,12 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      initialRoute: '/',
+      initialRoute: WelcomeScreen.id,
       routes: {
-        '/': (context) => WelcomeScreen(),
-        '/home': (context) => MainAppScreen(),
+        WelcomeScreen.id: (context) => WelcomeScreen(),
+        HomeScreen.id: (context) => MainAppScreen(),
+        LoginScreen.id: (context) => LoginScreen(),
+        RegistrationScreen.id: (context) => RegistrationScreen(),
 /*         '/records': (context) => TxList(),
  */
       },

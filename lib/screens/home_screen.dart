@@ -4,6 +4,8 @@ import 'package:my_money/widgets/main_cards.dart';
 import 'package:my_money/constants.dart';
 
 class HomeScreen extends StatelessWidget {
+  static const id = 'home_screen';
+
   double totalIncomes = 0;
   double totalExpenses = 0;
 

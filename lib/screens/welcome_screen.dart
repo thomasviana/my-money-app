@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class WelcomeScreen extends StatelessWidget {
+  static const String id = 'welcome_screen';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,7 +36,17 @@ class WelcomeScreen extends StatelessWidget {
               onPressed: () {
                 Navigator.pushNamed(context, '/home');
               },
-              child: Text('Get Started'),
+              child: Text('Log In'),
+            ),
+            SizedBox(
+              width: 200,
+              child: Divider(),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/home');
+              },
+              child: Text('Register'),
             ),
           ],
         ),
