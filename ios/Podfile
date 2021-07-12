@@ -1,5 +1,5 @@
-# Uncomment the next line to define a global platform for your project
-platform :ios, '9.0'
+# Uncomment this line to define a global platform for your project
+# platform :ios, '9.0'
 
 # CocoaPods analytics sends network stats synchronously affecting flutter build latency.
 ENV['COCOAPODS_DISABLE_STATS'] = 'true'
@@ -23,22 +23,25 @@ def flutter_root
   raise "FLUTTER_ROOT not found in #{generated_xcode_build_settings_path}. Try deleting Generated.xcconfig, then run flutter pub get"
 end
 
+# require File.expand_path(File.join('packages', 'flutter_tools', 'bin', 'podhelper'), flutter_root)
+
+# flutter_ios_podfile_setup
 # target 'Runner' do
-#   # Comment the next line if you don't want to use dynamic frameworks
 #   use_frameworks!
-
-#   # Pods for Runner
-#   pod 'Firebase/Analytics'
-
+#   use_modular_headers!
+#   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
 # end
 
 require File.expand_path(File.join('packages', 'flutter_tools', 'bin', 'podhelper'), flutter_root)
-
+    
 flutter_ios_podfile_setup
-
+platform :ios, '10.0'
 target 'Runner' do
   use_frameworks!
   use_modular_headers!
+  pod 'Firebase/Core'
+  pod 'Firebase/Firestore'
+  pod 'Firebase/Analytics'
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
 end
 
@@ -47,4 +50,3 @@ post_install do |installer|
     flutter_additional_ios_build_settings(target)
   end
 end
-

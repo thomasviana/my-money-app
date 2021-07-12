@@ -21,7 +21,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       body: ModalProgressHUD(
         inAsyncCall: showSpinner,
         child: Padding(
@@ -33,7 +32,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               Hero(
                 tag: 'logo',
                 child: Container(
-                  height: 200.0,
+                  height: 100.0,
                   child: Icon(
                     Icons.monetization_on_rounded,
                     size: 100,
@@ -41,7 +40,19 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 ),
               ),
               SizedBox(
-                height: 48.0,
+                width: 50,
+                child: Divider(),
+              ),
+              Text(
+                'My Money',
+                style: TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(
+                height: 50.0,
               ),
               TextField(
                   textAlign: TextAlign.center,
@@ -65,7 +76,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 height: 24.0,
               ),
               RoundedButton(
-                buttonColor: Colors.amber,
+                buttonColor: Colors.blue,
                 title: 'Register',
                 onPressed: () async {
                   setState(() {

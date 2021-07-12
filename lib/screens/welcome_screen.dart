@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'login_screen.dart';
+import 'registration_screen.dart';
 
 class WelcomeScreen extends StatelessWidget {
   static const String id = 'welcome_screen';
@@ -29,24 +31,35 @@ class WelcomeScreen extends StatelessWidget {
               ),
             ),
             SizedBox(
+              height: 40,
               width: 200,
               child: Divider(),
             ),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pushNamed(context, '/home');
-              },
-              child: Text('Log In'),
+            Container(
+              width: 300,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.amber,
+                ),
+                onPressed: () {
+                  Navigator.pushNamed(context, LoginScreen.id);
+                },
+                child: Text('Log In'),
+              ),
             ),
             SizedBox(
+              height: 0,
               width: 200,
               child: Divider(),
             ),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pushNamed(context, '/home');
-              },
-              child: Text('Register'),
+            Container(
+              width: 300,
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, RegistrationScreen.id);
+                },
+                child: Text('Register'),
+              ),
             ),
           ],
         ),
