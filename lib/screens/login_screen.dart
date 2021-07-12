@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'home_screen.dart';
 import 'package:my_money/constants.dart';
 import 'package:my_money/widgets/rounded_button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -90,7 +91,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   try {
                     final existingUser = await _auth.signInWithEmailAndPassword(
                         email: email, password: password);
-                    Navigator.pushNamed(context, '/home');
+                    Navigator.pushNamed(context, HomeScreen.id);
                     setState(() {
                       showSpinner = false;
                     });
