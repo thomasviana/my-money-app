@@ -30,8 +30,8 @@ class _MainAppScreenState extends State<MainAppScreen> {
     }
   }
 
-  List<Transaction> _userTransactions = [
-    Transaction(
+  List<Tx> _userTransactions = [
+    Tx(
       title: 'Salary',
       tag: 'AI',
       amount: 8000,
@@ -39,7 +39,7 @@ class _MainAppScreenState extends State<MainAppScreen> {
       id: DateTime.now().toString(),
       type: 'Income',
     ),
-    Transaction(
+    Tx(
       title: 'Gas',
       tag: 'NEC',
       amount: 100,
@@ -47,7 +47,7 @@ class _MainAppScreenState extends State<MainAppScreen> {
       id: DateTime.now().toString(),
       type: 'Expense',
     ),
-    Transaction(
+    Tx(
       title: 'Restaurant',
       tag: 'DIV',
       amount: 150,
@@ -55,7 +55,7 @@ class _MainAppScreenState extends State<MainAppScreen> {
       id: DateTime.now().toString(),
       type: 'Expense',
     ),
-    Transaction(
+    Tx(
       title: 'Rent',
       tag: 'NEC',
       amount: 2500,
@@ -95,7 +95,7 @@ class _MainAppScreenState extends State<MainAppScreen> {
 
   void _addNewTx(
       String title, String tag, double amount, DateTime dateTime, String type) {
-    var newTx = Transaction(
+    var newTx = Tx(
       title: title,
       tag: tag,
       amount: amount,
@@ -127,12 +127,10 @@ class _MainAppScreenState extends State<MainAppScreen> {
         totalIncomes: totalIncomes,
       ),
       TxList(
-        transactions: _userTransactions,
         deleteTx: _deleteTx,
         // icon: selectedIcon,
       ),
       TxList(
-        transactions: _userTransactions,
         deleteTx: _deleteTx,
         // icon: selectedIcon,
       ),

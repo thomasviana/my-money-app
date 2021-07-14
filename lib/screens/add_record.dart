@@ -6,6 +6,12 @@ import 'package:my_money/widgets/buttons_add_record.dart';
 import 'package:my_money/widgets/main_textfield.dart';
 import 'package:my_money/constants.dart';
 
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+final _fireStore = FirebaseFirestore.instance;
+User? loggedInUser;
+
 // ignore: must_be_immutable
 class AddRecord extends StatefulWidget {
   late Function addTx;
@@ -164,11 +170,24 @@ class _AddRecordState extends State<AddRecord> {
                       color: Theme.of(context).accentColor,
                       title: 'Add',
                       onPress: () {
-                        _submitData();
-                        print('add');
+                        // _fireStore.collection("messages").orderBy(false);
                         newAmount.clear();
                         newConcept.clear();
                         newBudget.clear();
+                        Navigator.pop(context);
+
+                        _fireStore.collection("tx").add({
+                          'title': newConcept.text,
+                          'tag': newBudget.text,
+                          'amount': double.parse(newAmount.text),
+                          'date': DateTime.now().microsecondsSinceEpoch,
+                          'id':
+                              DateTime.now().microsecondsSinceEpoch.toString(),
+                          'type': currentValue == 0 ? 'Expense' : 'Income',
+                        });
+
+                        // _submitData();
+                        print('add');
                       },
                     ),
                   ],

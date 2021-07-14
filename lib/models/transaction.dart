@@ -1,4 +1,4 @@
-class Transaction {
+class Tx {
   final String title;
   final String tag;
   final double amount;
@@ -6,7 +6,7 @@ class Transaction {
   final String id;
   final String type;
 
-  Transaction(
+  Tx(
       {required this.title,
       required this.tag,
       required this.amount,
