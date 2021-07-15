@@ -35,7 +35,7 @@ class _MainAppScreenState extends State<MainAppScreen> {
       title: 'Salary',
       tag: 'AI',
       amount: 8000,
-      date: DateTime.now(),
+      date: DateTime.now().toString(),
       id: DateTime.now().toString(),
       type: 'Income',
     ),
@@ -43,7 +43,7 @@ class _MainAppScreenState extends State<MainAppScreen> {
       title: 'Gas',
       tag: 'NEC',
       amount: 100,
-      date: DateTime.now(),
+      date: DateTime.now().toString(),
       id: DateTime.now().toString(),
       type: 'Expense',
     ),
@@ -51,7 +51,7 @@ class _MainAppScreenState extends State<MainAppScreen> {
       title: 'Restaurant',
       tag: 'DIV',
       amount: 150,
-      date: DateTime.now(),
+      date: DateTime.now().toString(),
       id: DateTime.now().toString(),
       type: 'Expense',
     ),
@@ -59,7 +59,7 @@ class _MainAppScreenState extends State<MainAppScreen> {
       title: 'Rent',
       tag: 'NEC',
       amount: 2500,
-      date: DateTime.now(),
+      date: DateTime.now().toString(),
       id: DateTime.now().toString(),
       type: 'Expense',
     ),
@@ -71,7 +71,7 @@ class _MainAppScreenState extends State<MainAppScreen> {
   @override
   void initState() {
     super.initState();
-    updateUI();
+    // updateUI();
   }
 
   void updateUI() {
@@ -94,7 +94,7 @@ class _MainAppScreenState extends State<MainAppScreen> {
   }
 
   void _addNewTx(
-      String title, String tag, double amount, DateTime dateTime, String type) {
+      String title, String tag, double amount, String dateTime, String type) {
     var newTx = Tx(
       title: title,
       tag: tag,

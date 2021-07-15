@@ -2,7 +2,7 @@ class Tx {
   final String title;
   final String tag;
   final double amount;
-  final DateTime date;
+  final String date;
   final String id;
   final String type;
 
