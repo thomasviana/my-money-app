@@ -45,7 +45,7 @@ class _TxListState extends State<TxList> {
       child: StreamBuilder<QuerySnapshot>(
           stream: _fireStore
               .collection('tx')
-              // .orderBy('time', descending: true)
+              .orderBy('title', descending: true)
               .snapshots(),
           builder: (context, snapshot) {
             if (!snapshot.hasData) {
@@ -88,7 +88,12 @@ class _TxListState extends State<TxList> {
                           color: Colors.red,
                           icon: Icons.delete,
                           onTap: () {
-                            widget.deleteTx(txList[index].id);
+                            FirebaseFirestore.instance.runTransaction(
+                                (Transaction myTransaction) async {
+                              myTransaction
+                                  .delete(snapshot.data!.docs[index].reference);
+                            });
+                            // widget.deleteTx(txList[index].id);
                           },
                         ),
                       ],
