@@ -171,20 +171,22 @@ class _AddRecordState extends State<AddRecord> {
                       title: 'Add',
                       onPress: () {
                         // _fireStore.collection("messages").orderBy(false);
-                        newAmount.clear();
-                        newConcept.clear();
-                        newBudget.clear();
+
                         Navigator.pop(context);
 
                         _fireStore.collection("tx").add({
                           'title': newConcept.text,
                           'tag': newBudget.text,
-                          'amount': double.parse(newAmount.text),
-                          'date': DateTime.now().microsecondsSinceEpoch,
+                          'amount': newAmount.text,
+                          'date':
+                              DateTime.now().microsecondsSinceEpoch.toString(),
                           'id':
                               DateTime.now().microsecondsSinceEpoch.toString(),
                           'type': currentValue == 0 ? 'Expense' : 'Income',
                         });
+                        newAmount.clear();
+                        newConcept.clear();
+                        newBudget.clear();
 
                         // _submitData();
                         print('add');
