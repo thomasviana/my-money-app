@@ -58,7 +58,7 @@ class HomeScreen extends StatelessWidget {
               HomeCard(
                 title: 'Incomes',
                 icon: Icons.arrow_circle_down_rounded,
-                iconColor: Colors.green,
+                iconColor: Colors.black,
                 value: totalIncomes,
               ),
               SizedBox(
@@ -67,7 +67,7 @@ class HomeScreen extends StatelessWidget {
               HomeCard(
                   title: 'Expenses',
                   icon: Icons.arrow_circle_up_rounded,
-                  iconColor: Colors.red,
+                  iconColor: Colors.black,
                   value: totalExpenses),
             ],
           ),

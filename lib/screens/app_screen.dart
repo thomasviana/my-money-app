@@ -139,12 +139,15 @@ class _MainAppScreenState extends State<MainAppScreen> {
     print(totalExpenses);
 
     return Scaffold(
+      backgroundColor: Color.fromRGBO(225, 239, 59, 1),
       body: _screens[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
           items: <BottomNavigationBarItem>[
             BottomNavigationBarItem(
-                icon: Icon(Icons.home_rounded), label: 'Home'),
+              icon: Icon(Icons.home_rounded),
+              label: 'Home',
+            ),
             BottomNavigationBarItem(
                 icon: Icon(
                   Icons.add_circle_rounded,
@@ -156,7 +159,7 @@ class _MainAppScreenState extends State<MainAppScreen> {
                 label: 'Records'),
           ],
           currentIndex: _selectedIndex,
-          selectedItemColor: Theme.of(context).primaryIconTheme.color,
+          selectedItemColor: Colors.black,
           onTap: _onItemTapped),
     );
   }

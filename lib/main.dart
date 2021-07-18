@@ -32,9 +32,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'My Money App',
-      theme: ThemeData.dark().copyWith(
+      theme: ThemeData().copyWith(
+        backgroundColor: Color.fromRGBO(225, 239, 59, 1),
         bottomSheetTheme: BottomSheetThemeData(backgroundColor: Colors.white),
-        accentColor: Colors.amber,
+        accentColor: Color.fromRGBO(225, 239, 59, 1),
         cardTheme: CardTheme(
           color: Colors.white,
           shape: RoundedRectangleBorder(
