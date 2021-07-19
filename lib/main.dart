@@ -12,6 +12,8 @@ import 'screens/login_screen.dart';
 import 'screens/welcome_screen.dart';
 import 'screens/registration_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:provider/provider.dart';
+import 'models/tx_data.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -30,27 +32,36 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'My Money App',
-      theme: ThemeData().copyWith(
-        backgroundColor: Color.fromRGBO(225, 239, 59, 1),
-        accentColor: Color.fromRGBO(225, 239, 59, 1),
-        cardTheme: CardTheme(
-          color: Colors.white,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(20)),
+    return ChangeNotifierProvider<TxData>(
+      create: (context) => TxData(),
+      child: MaterialApp(
+        title: 'My Money App',
+        theme: ThemeData(
+          backgroundColor: Color.fromRGBO(225, 239, 59, 1),
+          accentColor: Color.fromRGBO(225, 239, 59, 1),
+          fontFamily: 'Ubuntu',
+          appBarTheme: AppBarTheme(
+            titleTextStyle: TextStyle(color: Colors.green),
+            titleSpacing: 10,
+            backgroundColor: Color.fromRGBO(225, 239, 59, 1),
+          ),
+          cardTheme: CardTheme(
+            color: Colors.grey[200],
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(20)),
+            ),
           ),
         ),
+        initialRoute: WelcomeScreen.id,
+        routes: {
+          WelcomeScreen.id: (context) => WelcomeScreen(),
+          HomeScreen.id: (context) => MainAppScreen(),
+          LoginScreen.id: (context) => LoginScreen(),
+          RegistrationScreen.id: (context) => RegistrationScreen(),
+          /*         '/records': (context) => TxList(),
+     */
+        },
       ),
-      initialRoute: WelcomeScreen.id,
-      routes: {
-        WelcomeScreen.id: (context) => WelcomeScreen(),
-        HomeScreen.id: (context) => MainAppScreen(),
-        LoginScreen.id: (context) => LoginScreen(),
-        RegistrationScreen.id: (context) => RegistrationScreen(),
-/*         '/records': (context) => TxList(),
- */
-      },
     );
   }
 }

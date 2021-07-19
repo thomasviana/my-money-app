@@ -58,7 +58,7 @@ class HomeScreen extends StatelessWidget {
                     topLeft: Radius.circular(50),
                     topRight: Radius.circular(50),
                   )),
-              child: Column(
+              child: ListView(
                 children: [
                   HomeCard(
                     title: 'My Balance',

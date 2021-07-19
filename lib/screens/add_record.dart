@@ -5,6 +5,7 @@ import 'package:my_money/models/transaction.dart';
 import 'package:my_money/widgets/buttons_add_record.dart';
 import 'package:my_money/widgets/main_textfield.dart';
 import 'package:my_money/constants.dart';
+import 'package:intl/intl.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -97,7 +98,7 @@ class _AddRecordState extends State<AddRecord> {
             controller: controller,
             children: [
               CupertinoSlidingSegmentedControl(
-                thumbColor: Colors.black,
+                // thumbColor: Colors.black,
                 children: children,
                 onValueChanged: (int? value) {
                   setState(() {
@@ -176,7 +177,7 @@ class _AddRecordState extends State<AddRecord> {
 
                         _fireStore.collection("tx").add({
                           'title': newConcept.text,
-                          'tag': newBudget.text,
+                          'tag': budgetTag,
                           'amount': newAmount.text,
                           'date':
                               DateTime.now().microsecondsSinceEpoch.toString(),

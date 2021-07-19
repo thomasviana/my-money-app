@@ -30,40 +30,8 @@ class _MainAppScreenState extends State<MainAppScreen> {
     }
   }
 
-  List<Tx> _userTransactions = [
-    Tx(
-      title: 'Salary',
-      tag: 'AI',
-      amount: 8000,
-      date: DateTime.now().toString(),
-      id: DateTime.now().toString(),
-      type: 'Income',
-    ),
-    Tx(
-      title: 'Gas',
-      tag: 'NEC',
-      amount: 100,
-      date: DateTime.now().toString(),
-      id: DateTime.now().toString(),
-      type: 'Expense',
-    ),
-    Tx(
-      title: 'Restaurant',
-      tag: 'DIV',
-      amount: 150,
-      date: DateTime.now().toString(),
-      id: DateTime.now().toString(),
-      type: 'Expense',
-    ),
-    Tx(
-      title: 'Rent',
-      tag: 'NEC',
-      amount: 2500,
-      date: DateTime.now().toString(),
-      id: DateTime.now().toString(),
-      type: 'Expense',
-    ),
-  ];
+  List<Tx> _userTransactions = [];
+
   double totalIncomes = 0;
   double totalExpenses = 0;
   Icon selectedIcon = Icon(Icons.forward);
@@ -127,19 +95,23 @@ class _MainAppScreenState extends State<MainAppScreen> {
         totalIncomes: totalIncomes,
       ),
       TxList(
-        deleteTx: _deleteTx,
-        // icon: selectedIcon,
-      ),
+          // deleteTx: _deleteTx,
+          // icon: selectedIcon,
+          ),
       TxList(
-        deleteTx: _deleteTx,
-        // icon: selectedIcon,
-      ),
+          // deleteTx: _deleteTx,
+          // icon: selectedIcon,
+          ),
     ];
 
-    print(totalExpenses);
+    AppBar txAppBar = AppBar(
+      backgroundColor: Theme.of(context).accentColor,
+      title: Text('Transactions'),
+    );
 
     return Scaffold(
-      backgroundColor: Color.fromRGBO(225, 239, 59, 1),
+      backgroundColor: Theme.of(context).accentColor,
+      appBar: _selectedIndex == 2 ? txAppBar : null,
       body: _screens[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,

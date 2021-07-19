@@ -10,34 +10,48 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 final _fireStore = FirebaseFirestore.instance;
 User? loggedInUser;
 
-class TxList extends StatefulWidget {
-  final Function deleteTx;
-
-  TxList({required this.deleteTx});
-
-  @override
-  _TxListState createState() => _TxListState();
-}
-
-class _TxListState extends State<TxList> {
+class TxList extends StatelessWidget with ChangeNotifier {
   final currency = NumberFormat("#,##0.00", "en_US");
-  final _auth = FirebaseAuth.instance;
+  // final _auth = FirebaseAuth.instance;
 
-  @override
-  void initState() {
-    super.initState();
-    getCurrentUser();
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   getCurrentUser();
+  //   updateUI();
+  //   print('updated');
+  // }
 
-  void getCurrentUser() async {
-    try {
-      final user = _auth.currentUser;
-      loggedInUser = user;
-      print(user!.email);
-    } catch (e) {
-      print(e);
-    }
-  }
+  // void getCurrentUser() async {
+  //   try {
+  //     final user = _auth.currentUser;
+  //     loggedInUser = user;
+  //     print(user!.email);
+  //   } catch (e) {
+  //     print(e);
+  //   }
+  // }
+
+  // List<Tx> txList = [];
+  // double totalIncomes = 0;
+  // double totalExpenses = 0;
+
+  // void updateUI() {
+  //   totalIncomes = 0;
+  //   totalExpenses = 0;
+  //   for (var i = 0; i < txList.length; i++) {
+  //     if (txList[i].type == 'Expense') {
+  //       // selectedIcon = Icon(Icons.forward, color: Colors.red);
+  //       var newValue = txList[i].amount;
+  //       totalExpenses += newValue;
+  //     }
+  //     if (txList[i].type == 'Income') {
+  //       // selectedIcon = Icon(Icons.forward, color: Colors.green);
+  //       var newValue = txList[i].amount;
+  //       totalIncomes += newValue;
+  //     }
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -76,65 +90,72 @@ class _TxListState extends State<TxList> {
                     type: txType,
                   );
                   txList.add(newTx);
-                  print(newTx.amount);
+                  // var newValue = double.parse(txAmount);
+                  // totalExpenses += newValue;
                 }
-                return Expanded(
-                  child: ListView.builder(
-                    itemCount: txList.length,
-                    itemBuilder: (context, index) {
-                      return Slidable(
-                        actionPane: SlidableDrawerActionPane(),
-                        secondaryActions: <Widget>[
-                          IconSlideAction(
-                            caption: 'Delete',
-                            color: Colors.red,
-                            icon: Icons.delete,
-                            onTap: () {
-                              FirebaseFirestore.instance.runTransaction(
-                                  (Transaction myTransaction) async {
-                                myTransaction.delete(
-                                    snapshot.data!.docs[index].reference);
-                              });
-                              // widget.deleteTx(txList[index].id);
-                            },
-                          ),
-                        ],
-                        child: Container(
-                          child: ListTile(
-                            horizontalTitleGap: 20,
-                            contentPadding:
-                                EdgeInsets.symmetric(horizontal: 25),
-                            title: Text(txList[index].title,
-                                style: kTitleTextStyle),
-                            subtitle: Text(
-                              // DateFormat.yMMMMd().format(txList[index].date),
-                              txList[index].date,
-                              style: kDateTextStyle,
-                            ),
-                            leading: txList[index].type == 'Expense'
-                                ? Icon(Icons.forward, color: Colors.red)
-                                : Icon(Icons.forward, color: Colors.green),
-                            trailing: Container(
-                              width: 120,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  FittedBox(
-                                    fit: BoxFit.scaleDown,
-                                    child: Text(
-                                        '\$ ${currency.format(txList[index].amount)}',
-                                        style: kAmountTextStyle),
+
+                return Column(
+                  children: [
+                    Expanded(
+                      child: ListView.builder(
+                        itemCount: txList.length,
+                        itemBuilder: (context, index) {
+                          return Slidable(
+                            actionPane: SlidableDrawerActionPane(),
+                            secondaryActions: <Widget>[
+                              IconSlideAction(
+                                caption: 'Delete',
+                                color: Colors.red,
+                                icon: Icons.delete,
+                                onTap: () {
+                                  FirebaseFirestore.instance.runTransaction(
+                                      (Transaction myTransaction) async {
+                                    myTransaction.delete(
+                                        snapshot.data!.docs[index].reference);
+                                  });
+                                  // widget.deleteTx(txList[index].id);
+                                },
+                              ),
+                            ],
+                            child: Container(
+                              child: ListTile(
+                                horizontalTitleGap: 20,
+                                contentPadding:
+                                    EdgeInsets.symmetric(horizontal: 25),
+                                title: Text(txList[index].title,
+                                    style: kTitleTextStyle),
+                                subtitle: Text(
+                                  // DateFormat.yMMMMd().format(txList[index].date),
+                                  txList[index].date,
+                                  style: kDateTextStyle,
+                                ),
+                                leading: txList[index].type == 'Expense'
+                                    ? Icon(Icons.forward, color: Colors.red)
+                                    : Icon(Icons.forward, color: Colors.green),
+                                trailing: Container(
+                                  width: 120,
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    children: [
+                                      FittedBox(
+                                        fit: BoxFit.scaleDown,
+                                        child: Text(
+                                            '\$ ${currency.format(txList[index].amount)}',
+                                            style: kAmountTextStyle),
+                                      ),
+                                      Text(txList[index].tag,
+                                          style: kTagTextStyle),
+                                    ],
                                   ),
-                                  Text(txList[index].tag, style: kTagTextStyle),
-                                ],
+                                ),
                               ),
                             ),
-                          ),
-                        ),
-                      );
-                    },
-                  ),
+                          );
+                        },
+                      ),
+                    ),
+                  ],
                 );
               }
             }),

@@ -23,7 +23,7 @@ class ButtonAddRecord extends StatelessWidget {
         onPressed: onPress,
         child: Text(
           title,
-          style: TextStyle(color: Colors.white, fontSize: 18),
+          style: TextStyle(color: Colors.black, fontSize: 18),
         ),
       ),
     );
