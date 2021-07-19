@@ -4,6 +4,11 @@ import 'package:my_money/screens/home_screen.dart';
 import 'package:my_money/screens/tx_list.dart';
 import 'package:my_money/models/transaction.dart';
 import 'package:my_money/constants.dart';
+import 'settings_screen.dart';
+import 'budgets_screen.dart';
+
+import 'package:provider/provider.dart';
+import 'package:my_money/models/tx_data.dart';
 
 class MainAppScreen extends StatefulWidget {
   @override
@@ -17,9 +22,9 @@ class _MainAppScreenState extends State<MainAppScreen> {
     setState(() {
       _selectedIndex = index;
     });
-    if (_selectedIndex == 1) {
+    if (_selectedIndex == 2) {
       setState(() {
-        _selectedIndex = 2;
+        _selectedIndex = 3;
       });
       showModalBottomSheet(
         backgroundColor: Colors.transparent,
@@ -94,31 +99,41 @@ class _MainAppScreenState extends State<MainAppScreen> {
         totalExpenses: totalExpenses,
         totalIncomes: totalIncomes,
       ),
-      TxList(
-          // deleteTx: _deleteTx,
-          // icon: selectedIcon,
-          ),
-      TxList(
-          // deleteTx: _deleteTx,
-          // icon: selectedIcon,
-          ),
+      BudgetsScreen(
+        totalExpenses: totalExpenses,
+        totalIncomes: totalIncomes,
+      ),
+      TxList(),
+      TxList(),
+      SettingsScreen(),
     ];
 
     AppBar txAppBar = AppBar(
       backgroundColor: Theme.of(context).accentColor,
-      title: Text('Transactions'),
+      leading: Text(''),
+      title: Text(
+        'Transactions',
+        style: TextStyle(color: Colors.black),
+      ),
     );
 
     return Scaffold(
       backgroundColor: Theme.of(context).accentColor,
-      appBar: _selectedIndex == 2 ? txAppBar : null,
+      appBar: _selectedIndex == 3 ? txAppBar : null,
       body: _screens[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
+          selectedFontSize: 12,
+          unselectedFontSize: 12,
+          iconSize: 35,
           type: BottomNavigationBarType.fixed,
           items: <BottomNavigationBarItem>[
             BottomNavigationBarItem(
               icon: Icon(Icons.home_rounded),
               label: 'Home',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.all_inbox_rounded),
+              label: 'Budgets',
             ),
             BottomNavigationBarItem(
                 icon: Icon(
@@ -127,8 +142,11 @@ class _MainAppScreenState extends State<MainAppScreen> {
                 ),
                 label: ''),
             BottomNavigationBarItem(
-                icon: Icon(Icons.format_list_bulleted_rounded),
-                label: 'Records'),
+              icon: Icon(Icons.format_list_bulleted_rounded),
+              label: 'Records',
+            ),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.settings), label: 'Settings'),
           ],
           currentIndex: _selectedIndex,
           selectedItemColor: Colors.black,

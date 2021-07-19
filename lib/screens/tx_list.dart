@@ -55,110 +55,128 @@ class TxList extends StatelessWidget with ChangeNotifier {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.white,
-      child: Center(
-        child: StreamBuilder<QuerySnapshot>(
-            stream: _fireStore
-                .collection('tx')
-                .orderBy('title', descending: true)
-                .snapshots(),
-            builder: (context, snapshot) {
-              if (!snapshot.hasData) {
-                return Center(
-                  child: CircularProgressIndicator(
-                    backgroundColor: Colors.amber,
-                  ),
-                );
-              } else {
-                final txs = snapshot.data!.docs;
-                List<Tx> txList = [];
-                for (var tx in txs) {
-                  final txTitle = tx['title'];
-                  final txTag = tx['tag'];
-                  final txAmount = tx['amount'];
-                  final txDate = tx['date'];
-                  final txId = tx['id'];
-                  final txType = tx['type'];
-
-                  final newTx = Tx(
-                    title: txTitle,
-                    tag: txTag,
-                    amount: double.parse(txAmount),
-                    date: txDate,
-                    id: txId,
-                    type: txType,
+    return Scaffold(
+      body: Container(
+        color: Colors.white,
+        child: Center(
+          child: StreamBuilder<QuerySnapshot>(
+              stream: _fireStore
+                  .collection('tx')
+                  .orderBy('date', descending: true)
+                  .snapshots(),
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                  return Center(
+                    child: CircularProgressIndicator(
+                      backgroundColor: Theme.of(context).accentColor,
+                      color: Colors.black,
+                    ),
                   );
-                  txList.add(newTx);
-                  // var newValue = double.parse(txAmount);
-                  // totalExpenses += newValue;
-                }
+                } else {
+                  final txs = snapshot.data!.docs;
+                  List<Tx> txList = [];
+                  for (var tx in txs) {
+                    final txTitle = tx['title'];
+                    final txTag = tx['tag'];
+                    final txAmount = tx['amount'];
+                    final txDate = tx['date'];
+                    final txId = tx['id'];
+                    final txType = tx['type'];
 
-                return Column(
-                  children: [
-                    Expanded(
-                      child: ListView.builder(
-                        itemCount: txList.length,
-                        itemBuilder: (context, index) {
-                          return Slidable(
-                            actionPane: SlidableDrawerActionPane(),
-                            secondaryActions: <Widget>[
-                              IconSlideAction(
-                                caption: 'Delete',
-                                color: Colors.red,
-                                icon: Icons.delete,
-                                onTap: () {
-                                  FirebaseFirestore.instance.runTransaction(
-                                      (Transaction myTransaction) async {
-                                    myTransaction.delete(
-                                        snapshot.data!.docs[index].reference);
-                                  });
-                                  // widget.deleteTx(txList[index].id);
-                                },
-                              ),
-                            ],
-                            child: Container(
-                              child: ListTile(
-                                horizontalTitleGap: 20,
-                                contentPadding:
-                                    EdgeInsets.symmetric(horizontal: 25),
-                                title: Text(txList[index].title,
-                                    style: kTitleTextStyle),
-                                subtitle: Text(
-                                  // DateFormat.yMMMMd().format(txList[index].date),
-                                  txList[index].date,
-                                  style: kDateTextStyle,
+                    final newTx = Tx(
+                      title: txTitle,
+                      tag: txTag,
+                      amount: double.parse(txAmount),
+                      date: DateFormat.MMMd()
+                          .add_jm()
+                          .format((txDate.toDate()))
+                          .toString(),
+                      id: txId,
+                      type: txType,
+                    );
+                    txList.add(newTx);
+                    // var newValue = double.parse(txAmount);
+                    // totalExpenses += newValue;
+                  }
+
+                  return Column(
+                    children: [
+                      Expanded(
+                        child: ListView.builder(
+                          itemCount: txList.length,
+                          itemBuilder: (context, index) {
+                            return Slidable(
+                              actionPane: SlidableDrawerActionPane(),
+                              secondaryActions: <Widget>[
+                                IconSlideAction(
+                                  caption: 'Delete',
+                                  color: Colors.red,
+                                  icon: Icons.delete,
+                                  onTap: () {
+                                    FirebaseFirestore.instance.runTransaction(
+                                        (Transaction myTransaction) async {
+                                      myTransaction.delete(
+                                          snapshot.data!.docs[index].reference);
+                                    });
+                                    // widget.deleteTx(txList[index].id);
+                                  },
                                 ),
-                                leading: txList[index].type == 'Expense'
-                                    ? Icon(Icons.forward, color: Colors.red)
-                                    : Icon(Icons.forward, color: Colors.green),
-                                trailing: Container(
-                                  width: 120,
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment: CrossAxisAlignment.end,
-                                    children: [
-                                      FittedBox(
-                                        fit: BoxFit.scaleDown,
-                                        child: Text(
-                                            '\$ ${currency.format(txList[index].amount)}',
-                                            style: kAmountTextStyle),
-                                      ),
-                                      Text(txList[index].tag,
-                                          style: kTagTextStyle),
-                                    ],
+                              ],
+                              child: Container(
+                                child: ListTile(
+                                  horizontalTitleGap: 20,
+                                  contentPadding:
+                                      EdgeInsets.symmetric(horizontal: 25),
+                                  title: Text(txList[index].title,
+                                      style: kTitleTextStyle),
+                                  subtitle: Text(
+                                    // DateFormat.yMMMMd().format(txList[index].date),
+                                    txList[index].date,
+                                    style: kDateTextStyle,
+                                  ),
+                                  leading: txList[index].type == 'Expense'
+                                      ? CircleAvatar(
+                                          backgroundColor: Colors.black,
+                                          child: Icon(Icons.arrow_back,
+                                              color: Theme.of(context)
+                                                  .accentColor),
+                                        )
+                                      : CircleAvatar(
+                                          backgroundColor:
+                                              Theme.of(context).accentColor,
+                                          child: Icon(Icons.arrow_forward,
+                                              color: Colors.black),
+                                        ),
+                                  trailing: Container(
+                                    width: 120,
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.end,
+                                      children: [
+                                        FittedBox(
+                                          fit: BoxFit.scaleDown,
+                                          child: Text(
+                                              '\$ ${currency.format(txList[index].amount)}',
+                                              style: kAmountTextStyle),
+                                        ),
+                                        Text(txList[index].tag,
+                                            style: kTagTextStyle),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                          );
-                        },
+                            );
+                          },
+                        ),
                       ),
-                    ),
-                  ],
-                );
-              }
-            }),
+                    ],
+                  );
+                }
+              }),
+        ),
       ),
     );
   }

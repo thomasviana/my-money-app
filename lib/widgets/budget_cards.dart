@@ -1,0 +1,73 @@
+import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:my_money/constants.dart';
+
+class BudgetCards extends StatelessWidget {
+  String title;
+  double? value;
+  IconData icon;
+  Color iconColor;
+
+  BudgetCards(
+      {required this.title,
+      this.value,
+      required this.icon,
+      required this.iconColor});
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () => {},
+      child: Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15),
+        ),
+        elevation: 4,
+        margin: EdgeInsets.all(10),
+        child: Column(
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(15),
+                topRight: Radius.circular(15),
+              ),
+              child: Container(
+                color: Colors.black54,
+                height: 55,
+                width: double.infinity,
+                child: Center(
+                  child: Text(
+                    title,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.all(12),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: <Widget>[
+                  Row(
+                    children: <Widget>[
+                      Icon(
+                        Icons.attach_money_rounded,
+                      ),
+                      SizedBox(
+                        width: 6,
+                      ),
+                      Text('Balance    '),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}

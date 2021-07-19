@@ -3,13 +3,13 @@ import 'package:my_money/widgets/home_card.dart';
 import 'package:my_money/widgets/budget_cards.dart';
 import 'package:my_money/constants.dart';
 
-class HomeScreen extends StatelessWidget {
+class BudgetsScreen extends StatelessWidget {
   static const id = 'home_screen';
 
   double totalIncomes = 0;
   double totalExpenses = 0;
 
-  HomeScreen({required this.totalExpenses, required this.totalIncomes});
+  BudgetsScreen({required this.totalExpenses, required this.totalIncomes});
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +37,7 @@ class HomeScreen extends StatelessWidget {
                   width: 200,
                 ),
                 Text(
-                  'My Money',
+                  'My Budgets',
                   style: TextStyle(
                     fontSize: 40,
                     fontWeight: FontWeight.bold,
@@ -58,31 +58,48 @@ class HomeScreen extends StatelessWidget {
                     topLeft: Radius.circular(50),
                     topRight: Radius.circular(50),
                   )),
-              child: ListView(
+              child: GridView(
+                gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                  maxCrossAxisExtent: 200,
+                  childAspectRatio: 3 / 2,
+                ),
                 children: [
-                  HomeCard(
-                    title: 'My Balance',
+                  BudgetCards(
+                    title: 'FCR',
                     icon: Icons.account_balance_wallet_rounded,
                     iconColor: Colors.black,
                     value: myBalance,
                   ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  HomeCard(
-                    title: 'Incomes',
-                    icon: Icons.arrow_circle_down_rounded,
+                  BudgetCards(
+                    title: 'SEG',
+                    icon: Icons.account_balance_wallet_rounded,
                     iconColor: Colors.black,
-                    value: totalIncomes,
+                    value: myBalance,
                   ),
-                  SizedBox(
-                    height: 20,
+                  BudgetCards(
+                    title: 'DIV',
+                    icon: Icons.account_balance_wallet_rounded,
+                    iconColor: Colors.black,
+                    value: myBalance,
                   ),
-                  HomeCard(
-                      title: 'Expenses',
-                      icon: Icons.arrow_circle_up_rounded,
-                      iconColor: Colors.black,
-                      value: totalExpenses),
+                  BudgetCards(
+                    title: 'DAR',
+                    icon: Icons.account_balance_wallet_rounded,
+                    iconColor: Colors.black,
+                    value: myBalance,
+                  ),
+                  BudgetCards(
+                    title: 'SOS',
+                    icon: Icons.account_balance_wallet_rounded,
+                    iconColor: Colors.black,
+                    value: myBalance,
+                  ),
+                  BudgetCards(
+                    title: 'SUE',
+                    icon: Icons.account_balance_wallet_rounded,
+                    iconColor: Colors.black,
+                    value: myBalance,
+                  ),
                 ],
               ),
             ),

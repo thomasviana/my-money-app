@@ -13,4 +13,6 @@ class Tx {
       required this.date,
       required this.id,
       required this.type});
+
+  toList() {}
 }

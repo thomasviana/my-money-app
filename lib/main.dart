@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:my_money/screens/welcome_screen.dart';
-import 'widgets/main_cards.dart';
+import 'widgets/budget_cards.dart';
 import 'package:intl/intl.dart';
 import 'package:my_money/models/transaction.dart';
 import 'screens/home_screen.dart';
@@ -41,7 +41,7 @@ class MyApp extends StatelessWidget {
           accentColor: Color.fromRGBO(225, 239, 59, 1),
           fontFamily: 'Ubuntu',
           appBarTheme: AppBarTheme(
-            titleTextStyle: TextStyle(color: Colors.green),
+            titleTextStyle: TextStyle(color: Colors.black),
             titleSpacing: 10,
             backgroundColor: Color.fromRGBO(225, 239, 59, 1),
           ),

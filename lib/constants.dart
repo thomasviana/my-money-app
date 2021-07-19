@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'main.dart';
 
 final currency = NumberFormat("#,##0.00", "en_US");
+final dateFormat = DateFormat('yyyy-MM-dd');
 
 TextEditingController newAmount = TextEditingController();
 TextEditingController newConcept = TextEditingController();
@@ -13,7 +14,7 @@ const kTitleTextStyle = TextStyle(
   fontSize: 15,
   fontWeight: FontWeight.bold,
 );
-const kTagTextStyle = TextStyle(fontSize: 15);
+const kTagTextStyle = TextStyle(fontSize: 15, color: Colors.black54);
 
 const kAmountTextStyle = TextStyle(
   fontSize: 18,

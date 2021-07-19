@@ -38,22 +38,28 @@ class _AddRecordState extends State<AddRecord> {
 
   int? incomeTypeVal = 1;
   int? currentValue = 0;
-  String budgetTag = 'IA';
+  String budgetTag = 'AI';
 
   void _submitData() {
-    if (double.parse(newAmount.text).isNegative) {
-      return;
-    }
     if (currentValue == 0) {
       budgetTag = newBudget.text;
     }
     if (currentValue == 1) {
       incomeTypeVal == 0 ? budgetTag = 'AI' : budgetTag = 'PI';
     }
+    Navigator.pop(context);
 
-    widget.addTx(newConcept.text, budgetTag, double.parse(newAmount.text),
-        dateTime, currentValue == 0 ? 'Expense' : 'Income');
-    Navigator.of(context).pop();
+    _fireStore.collection("tx").add({
+      'title': newConcept.text,
+      'tag': budgetTag,
+      'amount': newAmount.text,
+      'date': dateTime,
+      'id': DateTime.now().microsecondsSinceEpoch.toString(),
+      'type': currentValue == 0 ? 'Expense' : 'Income',
+    });
+    newAmount.clear();
+    newConcept.clear();
+    newBudget.clear();
   }
 
   @override
@@ -171,26 +177,7 @@ class _AddRecordState extends State<AddRecord> {
                       color: Theme.of(context).accentColor,
                       title: 'Add',
                       onPress: () {
-                        // _fireStore.collection("messages").orderBy(false);
-
-                        Navigator.pop(context);
-
-                        _fireStore.collection("tx").add({
-                          'title': newConcept.text,
-                          'tag': budgetTag,
-                          'amount': newAmount.text,
-                          'date':
-                              DateTime.now().microsecondsSinceEpoch.toString(),
-                          'id':
-                              DateTime.now().microsecondsSinceEpoch.toString(),
-                          'type': currentValue == 0 ? 'Expense' : 'Income',
-                        });
-                        newAmount.clear();
-                        newConcept.clear();
-                        newBudget.clear();
-
-                        // _submitData();
-                        print('add');
+                        _submitData();
                       },
                     ),
                   ],
