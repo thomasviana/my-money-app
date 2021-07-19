@@ -34,7 +34,6 @@ class MyApp extends StatelessWidget {
       title: 'My Money App',
       theme: ThemeData().copyWith(
         backgroundColor: Color.fromRGBO(225, 239, 59, 1),
-        bottomSheetTheme: BottomSheetThemeData(backgroundColor: Colors.white),
         accentColor: Color.fromRGBO(225, 239, 59, 1),
         cardTheme: CardTheme(
           color: Colors.white,

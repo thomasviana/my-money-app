@@ -15,63 +15,79 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     double myBalance = totalIncomes - totalExpenses;
 
-    return SingleChildScrollView(
-      child: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            children: [
-              Container(
-                padding: EdgeInsets.only(bottom: 20, top: 30),
-                child: Hero(
-                  tag: 'logo',
-                  child: Icon(
-                    Icons.monetization_on_rounded,
-                    size: 120,
+    return SafeArea(
+      child: Column(
+        children: [
+          Container(
+            padding: EdgeInsets.only(top: 60, left: 30, right: 30, bottom: 30),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  padding: EdgeInsets.only(bottom: 20, top: 30),
+                  child: Hero(
+                    tag: 'logo',
+                    child: Icon(
+                      Icons.monetization_on_rounded,
+                      size: 120,
+                    ),
                   ),
                 ),
-              ),
-              SizedBox(
-                width: 200,
-                child: Divider(),
-              ),
-              Text(
-                'My Money',
-                style: TextStyle(
-                  fontSize: 40,
-                  fontWeight: FontWeight.bold,
+                SizedBox(
+                  width: 200,
                 ),
-              ),
-              SizedBox(
-                height: 50,
-                child: Divider(),
-              ),
-              HomeCard(
-                title: 'My Balance',
-                icon: Icons.account_balance_wallet_rounded,
-                iconColor: Colors.black,
-                value: myBalance,
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              HomeCard(
-                title: 'Incomes',
-                icon: Icons.arrow_circle_down_rounded,
-                iconColor: Colors.black,
-                value: totalIncomes,
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              HomeCard(
-                  title: 'Expenses',
-                  icon: Icons.arrow_circle_up_rounded,
-                  iconColor: Colors.black,
-                  value: totalExpenses),
-            ],
+                Text(
+                  'My Money',
+                  style: TextStyle(
+                    fontSize: 40,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(
+                  height: 0,
+                ),
+              ],
+            ),
           ),
-        ),
+          Expanded(
+            child: Container(
+              padding: EdgeInsets.only(top: 50, left: 20, right: 20),
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(50),
+                    topRight: Radius.circular(50),
+                  )),
+              child: Column(
+                children: [
+                  HomeCard(
+                    title: 'My Balance',
+                    icon: Icons.account_balance_wallet_rounded,
+                    iconColor: Colors.black,
+                    value: myBalance,
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  HomeCard(
+                    title: 'Incomes',
+                    icon: Icons.arrow_circle_down_rounded,
+                    iconColor: Colors.black,
+                    value: totalIncomes,
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  HomeCard(
+                      title: 'Expenses',
+                      icon: Icons.arrow_circle_up_rounded,
+                      iconColor: Colors.black,
+                      value: totalExpenses),
+                ],
+              ),
+            ),
+          )
+        ],
       ),
     );
   }

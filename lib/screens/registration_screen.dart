@@ -42,7 +42,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               ),
               SizedBox(
                 width: 50,
-                child: Divider(),
               ),
               Text(
                 'My Money',

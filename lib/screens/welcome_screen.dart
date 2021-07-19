@@ -24,7 +24,6 @@ class WelcomeScreen extends StatelessWidget {
             ),
             SizedBox(
               width: 200,
-              child: Divider(),
             ),
             Text(
               'My Money',
@@ -37,7 +36,6 @@ class WelcomeScreen extends StatelessWidget {
             SizedBox(
               height: 40,
               width: 200,
-              child: Divider(),
             ),
             RoundedButton(
               buttonColor: Theme.of(context).accentColor,

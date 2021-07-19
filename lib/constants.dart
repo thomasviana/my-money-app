@@ -13,14 +13,14 @@ const kTitleTextStyle = TextStyle(
   fontSize: 15,
   fontWeight: FontWeight.bold,
 );
-const kTagTextStyle = TextStyle(fontSize: 15, color: Colors.white70);
+const kTagTextStyle = TextStyle(fontSize: 15);
 
 const kAmountTextStyle = TextStyle(
   fontSize: 18,
   fontWeight: FontWeight.bold,
 );
 
-const kDateTextStyle = TextStyle(fontSize: 15, color: Colors.white70);
+const kDateTextStyle = TextStyle(fontSize: 15);
 
 const kTextFieldDecoration = InputDecoration(
   contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),

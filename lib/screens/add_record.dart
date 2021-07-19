@@ -97,7 +97,7 @@ class _AddRecordState extends State<AddRecord> {
             controller: controller,
             children: [
               CupertinoSlidingSegmentedControl(
-                thumbColor: currentValue == 0 ? Colors.red : Colors.green,
+                thumbColor: Colors.black,
                 children: children,
                 onValueChanged: (int? value) {
                   setState(() {

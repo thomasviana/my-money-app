@@ -43,7 +43,6 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               SizedBox(
                 width: 50,
-                child: Divider(),
               ),
               Text(
                 'My Money',
@@ -63,6 +62,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 },
                 decoration: kTextFieldDecoration.copyWith(
                   hintText: 'Enter you email',
+                  hoverColor: Colors.green,
                 ),
               ),
               SizedBox(
