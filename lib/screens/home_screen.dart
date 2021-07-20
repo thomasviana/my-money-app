@@ -2,18 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:my_money/widgets/home_card.dart';
 import 'package:my_money/widgets/budget_cards.dart';
 import 'package:my_money/constants.dart';
+import 'package:provider/provider.dart';
+import 'package:my_money/models/tx_data.dart';
 
 class HomeScreen extends StatelessWidget {
   static const id = 'home_screen';
 
-  double totalIncomes = 0;
-  double totalExpenses = 0;
-
-  HomeScreen({required this.totalExpenses, required this.totalIncomes});
-
   @override
   Widget build(BuildContext context) {
-    double myBalance = totalIncomes - totalExpenses;
+    double myBalance = Provider.of<TxData>(context).incomes -
+        Provider.of<TxData>(context).expenses;
 
     return SafeArea(
       child: Column(
@@ -73,16 +71,17 @@ class HomeScreen extends StatelessWidget {
                     title: 'Incomes',
                     icon: Icons.arrow_circle_down_rounded,
                     iconColor: Colors.black,
-                    value: totalIncomes,
+                    value: Provider.of<TxData>(context).incomes,
                   ),
                   SizedBox(
                     height: 20,
                   ),
                   HomeCard(
-                      title: 'Expenses',
-                      icon: Icons.arrow_circle_up_rounded,
-                      iconColor: Colors.black,
-                      value: totalExpenses),
+                    title: 'Expenses',
+                    icon: Icons.arrow_circle_up_rounded,
+                    iconColor: Colors.black,
+                    value: Provider.of<TxData>(context).expenses,
+                  ),
                 ],
               ),
             ),

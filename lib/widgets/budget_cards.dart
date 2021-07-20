@@ -51,16 +51,9 @@ class BudgetCards extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
-                  Row(
-                    children: <Widget>[
-                      Icon(
-                        Icons.attach_money_rounded,
-                      ),
-                      SizedBox(
-                        width: 6,
-                      ),
-                      Text('Balance    '),
-                    ],
+                  Text(
+                    '\$ ${currency.format(value)}',
+                    style: TextStyle(color: Colors.black, fontSize: 18),
                   ),
                 ],
               ),

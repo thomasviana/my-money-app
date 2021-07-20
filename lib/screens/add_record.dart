@@ -15,10 +15,6 @@ User? loggedInUser;
 
 // ignore: must_be_immutable
 class AddRecord extends StatefulWidget {
-  late Function addTx;
-
-  AddRecord(this.addTx);
-
   @override
   _AddRecordState createState() => _AddRecordState();
 }

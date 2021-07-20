@@ -30,12 +30,10 @@ class _MainAppScreenState extends State<MainAppScreen> {
         backgroundColor: Colors.transparent,
         isScrollControlled: true,
         context: context,
-        builder: (context) => AddRecord(_addNewTx),
+        builder: (context) => AddRecord(),
       );
     }
   }
-
-  List<Tx> _userTransactions = [];
 
   double totalIncomes = 0;
   double totalExpenses = 0;
@@ -44,61 +42,12 @@ class _MainAppScreenState extends State<MainAppScreen> {
   @override
   void initState() {
     super.initState();
-    // updateUI();
-  }
-
-  void updateUI() {
-    totalIncomes = 0;
-    totalExpenses = 0;
-    for (var i = 0; i < _userTransactions.length; i++) {
-      if (_userTransactions[i].type == 'Expense') {
-        // selectedIcon = Icon(Icons.forward, color: Colors.red);
-        var newValue = _userTransactions[i].amount;
-        totalExpenses += newValue;
-        print(_userTransactions[i].type);
-      }
-      if (_userTransactions[i].type == 'Income') {
-        // selectedIcon = Icon(Icons.forward, color: Colors.green);
-        var newValue = _userTransactions[i].amount;
-        totalIncomes += newValue;
-        print(_userTransactions[i].type);
-      }
-    }
-  }
-
-  void _addNewTx(
-      String title, String tag, double amount, String dateTime, String type) {
-    var newTx = Tx(
-      title: title,
-      tag: tag,
-      amount: amount,
-      date: dateTime,
-      id: DateTime.now().toString(),
-      type: type,
-    );
-    setState(() {
-      _userTransactions.add(newTx);
-    });
-    updateUI();
-    newAmount.clear();
-    newConcept.clear();
-    newBudget.clear();
-  }
-
-  void _deleteTx(String id) {
-    setState(() {
-      _userTransactions.removeWhere((element) => element.id == id);
-      updateUI();
-    });
   }
 
   @override
   Widget build(BuildContext context) {
     List<Widget> _screens = [
-      HomeScreen(
-        totalExpenses: totalExpenses,
-        totalIncomes: totalIncomes,
-      ),
+      HomeScreen(),
       BudgetsScreen(
         totalExpenses: totalExpenses,
         totalIncomes: totalIncomes,

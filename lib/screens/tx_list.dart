@@ -6,6 +6,8 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:provider/provider.dart';
+import 'package:my_money/models/tx_data.dart';
 
 final _fireStore = FirebaseFirestore.instance;
 User? loggedInUser;
@@ -95,8 +97,6 @@ class TxList extends StatelessWidget with ChangeNotifier {
                       type: txType,
                     );
                     txList.add(newTx);
-                    // var newValue = double.parse(txAmount);
-                    // totalExpenses += newValue;
                   }
 
                   return Column(

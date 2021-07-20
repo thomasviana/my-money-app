@@ -3,6 +3,9 @@ import 'package:my_money/widgets/home_card.dart';
 import 'package:my_money/widgets/budget_cards.dart';
 import 'package:my_money/constants.dart';
 
+import 'package:provider/provider.dart';
+import 'package:my_money/models/tx_data.dart';
+
 class BudgetsScreen extends StatelessWidget {
   static const id = 'home_screen';
 
@@ -68,37 +71,37 @@ class BudgetsScreen extends StatelessWidget {
                     title: 'FCR',
                     icon: Icons.account_balance_wallet_rounded,
                     iconColor: Colors.black,
-                    value: myBalance,
+                    value: Provider.of<TxData>(context).totalFCR,
                   ),
                   BudgetCards(
                     title: 'SEG',
                     icon: Icons.account_balance_wallet_rounded,
                     iconColor: Colors.black,
-                    value: myBalance,
+                    value: Provider.of<TxData>(context).totalSEG,
                   ),
                   BudgetCards(
                     title: 'DIV',
                     icon: Icons.account_balance_wallet_rounded,
                     iconColor: Colors.black,
-                    value: myBalance,
+                    value: Provider.of<TxData>(context).totalDIV,
                   ),
                   BudgetCards(
                     title: 'DAR',
                     icon: Icons.account_balance_wallet_rounded,
                     iconColor: Colors.black,
-                    value: myBalance,
+                    value: Provider.of<TxData>(context).totalDAR,
                   ),
                   BudgetCards(
                     title: 'SOS',
                     icon: Icons.account_balance_wallet_rounded,
                     iconColor: Colors.black,
-                    value: myBalance,
+                    value: Provider.of<TxData>(context).totalSOS,
                   ),
                   BudgetCards(
                     title: 'SUE',
                     icon: Icons.account_balance_wallet_rounded,
                     iconColor: Colors.black,
-                    value: myBalance,
+                    value: Provider.of<TxData>(context).totalSUE,
                   ),
                 ],
               ),
