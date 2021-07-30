@@ -1,12 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:my_money/models/transaction.dart';
-import 'package:flutter/material.dart';
-import 'package:my_money/models/transaction.dart';
 import 'package:intl/intl.dart';
-import 'package:my_money/constants.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-
+import 'package:my_money/models/transaction.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 final _fireStore = FirebaseFirestore.instance;
@@ -89,10 +83,10 @@ class TxData extends ChangeNotifier {
         }
       }
     }
+    notifyListeners();
   }
 
   double get expenses {
-    getData();
     return totalExpenses;
   }
 

@@ -1,14 +1,12 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:my_money/models/transaction.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'package:my_money/widgets/buttons_add_record.dart';
 import 'package:my_money/widgets/main_textfield.dart';
 import 'package:my_money/constants.dart';
-import 'package:intl/intl.dart';
 
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 final _fireStore = FirebaseFirestore.instance;
 User? loggedInUser;

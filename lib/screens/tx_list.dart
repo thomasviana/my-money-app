@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:my_money/models/transaction.dart';
 import 'package:intl/intl.dart';
-import 'package:my_money/constants.dart';
+
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:provider/provider.dart';
-import 'package:my_money/models/tx_data.dart';
+
+import 'package:my_money/models/transaction.dart';
+import 'package:my_money/constants.dart';
 
 final _fireStore = FirebaseFirestore.instance;
 User? loggedInUser;
@@ -15,45 +14,6 @@ User? loggedInUser;
 class TxList extends StatelessWidget with ChangeNotifier {
   final currency = NumberFormat("#,##0.00", "en_US");
   // final _auth = FirebaseAuth.instance;
-
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   getCurrentUser();
-  //   updateUI();
-  //   print('updated');
-  // }
-
-  // void getCurrentUser() async {
-  //   try {
-  //     final user = _auth.currentUser;
-  //     loggedInUser = user;
-  //     print(user!.email);
-  //   } catch (e) {
-  //     print(e);
-  //   }
-  // }
-
-  // List<Tx> txList = [];
-  // double totalIncomes = 0;
-  // double totalExpenses = 0;
-
-  // void updateUI() {
-  //   totalIncomes = 0;
-  //   totalExpenses = 0;
-  //   for (var i = 0; i < txList.length; i++) {
-  //     if (txList[i].type == 'Expense') {
-  //       // selectedIcon = Icon(Icons.forward, color: Colors.red);
-  //       var newValue = txList[i].amount;
-  //       totalExpenses += newValue;
-  //     }
-  //     if (txList[i].type == 'Income') {
-  //       // selectedIcon = Icon(Icons.forward, color: Colors.green);
-  //       var newValue = txList[i].amount;
-  //       totalIncomes += newValue;
-  //     }
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {

@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'main.dart';
 
 final currency = NumberFormat("#,##0.00", "en_US");
 final dateFormat = DateFormat('yyyy-MM-dd');

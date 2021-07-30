@@ -1,23 +1,14 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:provider/provider.dart';
+
 import 'package:my_money/screens/welcome_screen.dart';
-import 'widgets/budget_cards.dart';
-import 'package:intl/intl.dart';
-import 'package:my_money/models/transaction.dart';
 import 'screens/home_screen.dart';
-import 'package:my_money/screens/tx_list.dart';
 import 'screens/app_screen.dart';
 import 'screens/login_screen.dart';
 import 'screens/welcome_screen.dart';
 import 'screens/registration_screen.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:provider/provider.dart';
 import 'models/tx_data.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'models/tx_data.dart';
-
-final _fireStore = FirebaseFirestore.instance;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

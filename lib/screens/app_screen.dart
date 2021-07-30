@@ -1,14 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:my_money/screens/add_record.dart';
-import 'package:my_money/screens/home_screen.dart';
-import 'package:my_money/screens/tx_list.dart';
-import 'package:my_money/models/transaction.dart';
-import 'package:my_money/constants.dart';
+import 'add_record.dart';
+import 'home_screen.dart';
+import 'tx_list.dart';
 import 'settings_screen.dart';
 import 'budgets_screen.dart';
-
-import 'package:provider/provider.dart';
-import 'package:my_money/models/tx_data.dart';
 
 class MainAppScreen extends StatefulWidget {
   @override

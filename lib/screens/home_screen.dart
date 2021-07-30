@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:my_money/widgets/home_card.dart';
-import 'package:my_money/widgets/budget_cards.dart';
-import 'package:my_money/constants.dart';
 import 'package:provider/provider.dart';
 import 'package:my_money/models/tx_data.dart';
 

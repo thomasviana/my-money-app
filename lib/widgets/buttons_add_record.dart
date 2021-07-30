@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:my_money/constants.dart';
 
 class ButtonAddRecord extends StatelessWidget {
   final Color color;

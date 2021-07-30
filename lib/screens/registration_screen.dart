@@ -3,7 +3,6 @@ import 'home_screen.dart';
 import 'package:my_money/constants.dart';
 import 'package:my_money/widgets/rounded_button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-// // ignore: import_of_legacy_library_into_null_safe
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 class RegistrationScreen extends StatefulWidget {
