@@ -5,7 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 final _fireStore = FirebaseFirestore.instance;
 
-class TxData extends ChangeNotifier {
+class Txs extends ChangeNotifier {
   List<Tx> _items = [];
 
   List<Tx> get items {

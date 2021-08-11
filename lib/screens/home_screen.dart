@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_money/widgets/home_card.dart';
 import 'package:provider/provider.dart';
-import 'package:my_money/models/tx_data.dart';
+import 'package:my_money/providers/transactions.dart';
 
 class HomeScreen extends StatelessWidget {
   static const id = 'home_screen';

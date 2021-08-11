@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_money/widgets/budget_cards.dart';
-import 'package:my_money/models/tx_data.dart';
+import 'package:my_money/providers/transactions.dart';
 import 'package:provider/provider.dart';
 
 class BudgetsScreen extends StatelessWidget {

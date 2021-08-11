@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:my_money/models/tx_data.dart';
+import 'package:my_money/providers/transactions.dart';
 
 import 'package:my_money/widgets/buttons_add_record.dart';
 import 'package:my_money/widgets/main_textfield.dart';
@@ -62,7 +62,7 @@ class _AddRecordState extends State<AddRecord> {
       type: currentValue == 0 ? 'Expense' : 'Income',
     );
 
-    await Provider.of<TxData>(context, listen: false).addTx(_editedTx);
+    await Provider.of<Txs>(context, listen: false).addTx(_editedTx);
 
     newAmount.clear();
     newConcept.clear();
