@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'add_record.dart';
 import 'home_screen.dart';
-import 'tx_list.dart';
+import 'transactions_screen.dart';
 import 'settings_screen.dart';
 import 'budgets_screen.dart';
 
@@ -47,8 +47,8 @@ class _MainAppScreenState extends State<MainAppScreen> {
         totalExpenses: totalExpenses,
         totalIncomes: totalIncomes,
       ),
-      TxList(),
-      TxList(),
+      TransactionsScreen(),
+      TransactionsScreen(),
       SettingsScreen(),
     ];
 

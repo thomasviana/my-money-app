@@ -9,12 +9,12 @@ import 'screens/app_screen.dart';
 import 'screens/login_screen.dart';
 import 'screens/welcome_screen.dart';
 import 'screens/registration_screen.dart';
-import 'models/tx_data.dart';
+import 'providers/transactions.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  TxData().getData();
+  Txs().getData();
   // WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations(
     [
@@ -29,8 +29,8 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<TxData>(
-      create: (context) => TxData(),
+    return ChangeNotifierProvider<Txs>(
+      create: (context) => Txs(),
       child: MaterialApp(
         title: 'My Money App',
         theme: ThemeData(

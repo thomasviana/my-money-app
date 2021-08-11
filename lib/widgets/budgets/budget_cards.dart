@@ -4,14 +4,11 @@ import 'package:my_money/constants.dart';
 class BudgetCards extends StatelessWidget {
   String title;
   double? value;
-  IconData icon;
-  Color iconColor;
 
-  BudgetCards(
-      {required this.title,
-      this.value,
-      required this.icon,
-      required this.iconColor});
+  BudgetCards({
+    required this.title,
+    this.value,
+  });
 
   @override
   Widget build(BuildContext context) {
