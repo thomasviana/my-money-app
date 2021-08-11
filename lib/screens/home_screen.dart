@@ -33,7 +33,7 @@ class HomeScreen extends StatelessWidget {
                   width: 200,
                 ),
                 Text(
-                  'My Money',
+                  'My Money Test',
                   style: TextStyle(
                     fontSize: 40,
                     fontWeight: FontWeight.bold,
