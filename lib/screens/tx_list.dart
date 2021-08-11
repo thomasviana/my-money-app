@@ -48,11 +48,12 @@ class TxList extends StatelessWidget with ChangeNotifier {
                     final newTx = Tx(
                       title: txTitle,
                       tag: txTag,
-                      amount: double.parse(txAmount),
-                      date: DateFormat.MMMd()
-                          .add_jm()
-                          .format((txDate.toDate()))
-                          .toString(),
+                      amount: txAmount,
+                      // date: DateFormat.MMMd()
+                      //     .add_jm()
+                      //     .format((txDate.toDate()))
+                      //     .toString(),
+                      date: txDate,
                       id: txId,
                       type: txType,
                     );
@@ -91,7 +92,11 @@ class TxList extends StatelessWidget with ChangeNotifier {
                                       style: kTitleTextStyle),
                                   subtitle: Text(
                                     // DateFormat.yMMMMd().format(txList[index].date),
-                                    txList[index].date,
+                                    DateFormat.MMMd()
+                                        .add_jm()
+                                        .format((txList[index].date.toDate()))
+                                        .toString(),
+                                    // txList[index].date,
                                     style: kDateTextStyle,
                                   ),
                                   leading: txList[index].type == 'Expense'

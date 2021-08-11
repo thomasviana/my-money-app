@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:my_money/models/tx_data.dart';
 
 import 'package:my_money/widgets/buttons_add_record.dart';
 import 'package:my_money/widgets/main_textfield.dart';
 import 'package:my_money/constants.dart';
-
+import 'package:provider/provider.dart';
+import 'package:my_money/models/transaction.dart';
+import 'package:intl/intl.dart';
 
 final _fireStore = FirebaseFirestore.instance;
 User? loggedInUser;
@@ -18,7 +21,15 @@ class AddRecord extends StatefulWidget {
 }
 
 class _AddRecordState extends State<AddRecord> {
-  DateTime dateTime = DateTime.now();
+  Timestamp dateTime = Timestamp.now();
+  var _editedTx = Tx(
+    title: '',
+    tag: '',
+    amount: 0.0,
+    date: Timestamp.now(),
+    id: '',
+    type: '',
+  );
 
   final Map<int, Widget> children = const <int, Widget>{
     0: Text('Expense'),
@@ -34,7 +45,7 @@ class _AddRecordState extends State<AddRecord> {
   int? currentValue = 0;
   String budgetTag = 'AI';
 
-  void _submitData() {
+  Future<void> _submitData() async {
     if (currentValue == 0) {
       budgetTag = newBudget.text;
     }
@@ -42,18 +53,22 @@ class _AddRecordState extends State<AddRecord> {
       incomeTypeVal == 0 ? budgetTag = 'AI' : budgetTag = 'PI';
     }
     Navigator.pop(context);
+    _editedTx = Tx(
+      title: newConcept.text,
+      tag: budgetTag,
+      amount: double.parse(newAmount.text),
+      date: dateTime,
+      id: DateTime.now().microsecondsSinceEpoch.toString(),
+      type: currentValue == 0 ? 'Expense' : 'Income',
+    );
 
-    _fireStore.collection("tx").add({
-      'title': newConcept.text,
-      'tag': budgetTag,
-      'amount': newAmount.text,
-      'date': dateTime,
-      'id': DateTime.now().microsecondsSinceEpoch.toString(),
-      'type': currentValue == 0 ? 'Expense' : 'Income',
-    });
+    await Provider.of<TxData>(context, listen: false).addTx(_editedTx);
+
     newAmount.clear();
     newConcept.clear();
     newBudget.clear();
+    print(_editedTx.title);
+    print(dateTime);
   }
 
   @override
@@ -74,13 +89,14 @@ class _AddRecordState extends State<AddRecord> {
           child: CupertinoDatePicker(
 
               // backgroundColor: Colors.white,
-              initialDateTime: dateTime,
+              initialDateTime: DateTime.now(),
               mode: CupertinoDatePickerMode.dateAndTime,
               minimumDate: DateTime(DateTime.now().year, 2, 1),
               maximumDate: DateTime.now(),
               onDateTimeChanged: (dateTime) {
+                Timestamp timeStamp = Timestamp.fromDate(dateTime);
                 setState(() {
-                  this.dateTime = dateTime;
+                  this.dateTime = timeStamp;
                 });
               }),
         );

@@ -8,8 +8,8 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double myBalance = Provider.of<TxData>(context).incomes -
-        Provider.of<TxData>(context).expenses;
+    // double myBalance = Provider.of<TxData>(context).incomes -
+    //     Provider.of<TxData>(context).expenses;
 
     return SafeArea(
       child: Column(
@@ -60,7 +60,8 @@ class HomeScreen extends StatelessWidget {
                     title: 'My Balance',
                     icon: Icons.account_balance_wallet_rounded,
                     iconColor: Colors.black,
-                    value: myBalance,
+                    // value: myBalance,
+                    value: 0,
                   ),
                   SizedBox(
                     height: 20,
@@ -69,7 +70,8 @@ class HomeScreen extends StatelessWidget {
                     title: 'Incomes',
                     icon: Icons.arrow_circle_down_rounded,
                     iconColor: Colors.black,
-                    value: Provider.of<TxData>(context).incomes,
+                    // value: Provider.of<TxData>(context).incomes,
+                    value: 0,
                   ),
                   SizedBox(
                     height: 20,
@@ -78,7 +80,8 @@ class HomeScreen extends StatelessWidget {
                     title: 'Expenses',
                     icon: Icons.arrow_circle_up_rounded,
                     iconColor: Colors.black,
-                    value: Provider.of<TxData>(context).expenses,
+                    // value: Provider.of<TxData>(context).expenses,
+                    value: 0,
                   ),
                 ],
               ),

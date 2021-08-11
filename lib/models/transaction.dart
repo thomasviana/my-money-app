@@ -1,8 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class Tx {
   final String title;
   final String tag;
   final double amount;
-  final String date;
+  final Timestamp date;
   final String id;
   final String type;
 
