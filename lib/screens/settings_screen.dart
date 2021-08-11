@@ -55,16 +55,17 @@ class MapScreenState extends State<SettingsScreen>
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
                             Container(
-                                width: 140.0,
-                                height: 140.0,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  image: DecorationImage(
-                                    image: ExactAssetImage(
-                                        'assets/images/no-photo.png'),
-                                    fit: BoxFit.cover,
-                                  ),
-                                )),
+                              width: 140.0,
+                              height: 140.0,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                image: DecorationImage(
+                                  image: ExactAssetImage(
+                                      'assets/images/no-photo.png'),
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ),
                           ],
                         ),
                         Padding(
