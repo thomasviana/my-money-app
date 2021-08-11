@@ -63,6 +63,7 @@ class _AddRecordState extends State<AddRecord> {
     );
 
     await Provider.of<Txs>(context, listen: false).addTx(_editedTx);
+    await Provider.of<Txs>(context, listen: false).getData();
 
     newAmount.clear();
     newConcept.clear();

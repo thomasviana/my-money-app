@@ -32,10 +32,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               Hero(
                 tag: 'logo',
                 child: Container(
-                  height: 100.0,
+                  height: 200.0,
                   child: Icon(
                     Icons.monetization_on_rounded,
-                    size: 100,
+                    size: 200,
                   ),
                 ),
               ),

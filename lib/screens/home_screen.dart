@@ -1,16 +1,40 @@
 import 'package:flutter/material.dart';
-import 'package:my_money/widgets/home_card.dart';
+import 'package:my_money/widgets/home/home_listview.dart';
+import 'package:my_money/widgets/home/home_card.dart';
 import 'package:provider/provider.dart';
 import 'package:my_money/providers/transactions.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   static const id = 'home_screen';
 
   @override
-  Widget build(BuildContext context) {
-    // double myBalance = Provider.of<TxData>(context).incomes -
-    //     Provider.of<TxData>(context).expenses;
+  _HomeScreenState createState() => _HomeScreenState();
+}
 
+class _HomeScreenState extends State<HomeScreen> {
+  var _isInit = true;
+  var _isLoading = false;
+
+  @override
+  void didChangeDependencies() {
+    if (_isInit) {
+      setState(() {
+        _isLoading = true;
+      });
+      Provider.of<Txs>(
+        context,
+      ).getData().then((_) {
+        setState(() {
+          _isLoading = false;
+        });
+      });
+    }
+    _isInit = false;
+    super.didChangeDependencies();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return SafeArea(
       child: Column(
         children: [
@@ -54,37 +78,11 @@ class HomeScreen extends StatelessWidget {
                     topLeft: Radius.circular(50),
                     topRight: Radius.circular(50),
                   )),
-              child: ListView(
-                children: [
-                  HomeCard(
-                    title: 'My Balance',
-                    icon: Icons.account_balance_wallet_rounded,
-                    iconColor: Colors.black,
-                    // value: myBalance,
-                    value: 0,
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  HomeCard(
-                    title: 'Incomes',
-                    icon: Icons.arrow_circle_down_rounded,
-                    iconColor: Colors.black,
-                    // value: Provider.of<TxData>(context).incomes,
-                    value: 0,
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  HomeCard(
-                    title: 'Expenses',
-                    icon: Icons.arrow_circle_up_rounded,
-                    iconColor: Colors.black,
-                    // value: Provider.of<TxData>(context).expenses,
-                    value: 0,
-                  ),
-                ],
-              ),
+              child: _isLoading
+                  ? Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  : HomeListView(),
             ),
           )
         ],

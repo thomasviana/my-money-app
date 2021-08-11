@@ -12,22 +12,13 @@ class Txs extends ChangeNotifier {
     return [..._items];
   }
 
-  Future<void> addTx(Tx newTx) async {
-    FirebaseFirestore.instance.collection('tx').add(
-      {
-        'title': newTx.title,
-        'tag': newTx.tag,
-        'amount': newTx.amount,
-        'date': newTx.date,
-        'id': newTx.id,
-        'type': newTx.type,
-      },
-    );
-    notifyListeners();
+  Tx findById(String id) {
+    return _items.firstWhere((tx) => tx.id == id);
   }
 
   Future<void> getData() async {
-    QuerySnapshot querySnapshot = await _fireStore.collection('tx').get();
+    QuerySnapshot querySnapshot =
+        await _fireStore.collection('tx').orderBy('date').get();
     final allData = querySnapshot.docs;
 
     List<Tx> txList = [];
@@ -51,6 +42,29 @@ class Txs extends ChangeNotifier {
       txList.add(newTx);
     }
     _items = txList;
+    notifyListeners();
+  }
+
+  Future<void> addTx(Tx newTx) async {
+    FirebaseFirestore.instance.collection('tx').add(
+      {
+        'title': newTx.title,
+        'tag': newTx.tag,
+        'amount': newTx.amount,
+        'date': newTx.date,
+        'id': newTx.id,
+        'type': newTx.type,
+      },
+    );
+    notifyListeners();
+  }
+
+  Future<void> deletTx(String id) async {
+    final txIndex = _items.indexWhere((tx) => tx.id == id);
+    await FirebaseFirestore.instance.collection('tx').doc('txIndex').delete();
+    _items.removeAt(txIndex);
+    notifyListeners();
+    _items.removeWhere((tx) => tx.id == id);
     notifyListeners();
   }
 }

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:my_money/widgets/budget_cards.dart';
+import 'package:my_money/widgets/budgets/budget_cards.dart';
 import 'package:my_money/providers/transactions.dart';
+import 'package:my_money/widgets/budgets/budgets_grid.dart';
 import 'package:provider/provider.dart';
 
-class BudgetsScreen extends StatelessWidget {
+class BudgetsScreen extends StatefulWidget {
   static const id = 'home_screen';
 
   double totalIncomes = 0;
@@ -12,9 +13,33 @@ class BudgetsScreen extends StatelessWidget {
   BudgetsScreen({required this.totalExpenses, required this.totalIncomes});
 
   @override
-  Widget build(BuildContext context) {
-    double myBalance = totalIncomes - totalExpenses;
+  _BudgetsScreenState createState() => _BudgetsScreenState();
+}
 
+class _BudgetsScreenState extends State<BudgetsScreen> {
+  var _isInit = true;
+  var _isLoading = false;
+
+  @override
+  void didChangeDependencies() {
+    if (_isInit) {
+      setState(() {
+        _isLoading = true;
+      });
+      Provider.of<Txs>(
+        context,
+      ).getData().then((_) {
+        setState(() {
+          _isLoading = false;
+        });
+      });
+    }
+    _isInit = false;
+    super.didChangeDependencies();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return SafeArea(
       child: Column(
         children: [
@@ -58,56 +83,11 @@ class BudgetsScreen extends StatelessWidget {
                     topLeft: Radius.circular(50),
                     topRight: Radius.circular(50),
                   )),
-              child: GridView(
-                gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                  maxCrossAxisExtent: 200,
-                  childAspectRatio: 3 / 2,
-                ),
-                children: [
-                  BudgetCards(
-                    title: 'FCR',
-                    icon: Icons.account_balance_wallet_rounded,
-                    iconColor: Colors.black,
-                    // value: Provider.of<TxData>(context).totalFCR,
-                    value: 0,
-                  ),
-                  BudgetCards(
-                    title: 'SEG',
-                    icon: Icons.account_balance_wallet_rounded,
-                    iconColor: Colors.black,
-                    // value: Provider.of<TxData>(context).totalSEG,
-                    value: 0,
-                  ),
-                  BudgetCards(
-                    title: 'DIV',
-                    icon: Icons.account_balance_wallet_rounded,
-                    iconColor: Colors.black,
-                    // value: Provider.of<TxData>(context).totalDIV,
-                    value: 0,
-                  ),
-                  BudgetCards(
-                    title: 'DAR',
-                    icon: Icons.account_balance_wallet_rounded,
-                    iconColor: Colors.black,
-                    // value: Provider.of<TxData>(context).totalDAR,
-                    value: 0,
-                  ),
-                  BudgetCards(
-                    title: 'SOS',
-                    icon: Icons.account_balance_wallet_rounded,
-                    iconColor: Colors.black,
-                    // value: Provider.of<TxData>(context).totalSOS,
-                    value: 0,
-                  ),
-                  BudgetCards(
-                    title: 'SUE',
-                    icon: Icons.account_balance_wallet_rounded,
-                    iconColor: Colors.black,
-                    // value: Provider.of<TxData>(context).totalSUE,
-                    value: 0,
-                  ),
-                ],
-              ),
+              child: _isLoading
+                  ? Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  : BudgetsGrid(),
             ),
           )
         ],
