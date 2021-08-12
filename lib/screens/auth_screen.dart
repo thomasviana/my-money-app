@@ -17,7 +17,6 @@ class _AuthScreenState extends State<AuthScreen> {
   final _auth = FirebaseAuth.instance;
   late bool _registerMode = false;
   late bool _loginMode = false;
-  late bool _hasError = false;
 
   late String email;
   late String password;
@@ -79,7 +78,7 @@ class _AuthScreenState extends State<AuthScreen> {
               SizedBox(
                 height: 50.0,
               ),
-              TextField(
+              TextFormField(
                 key: ValueKey('email'),
                 textAlign: TextAlign.center,
                 onChanged: (value) {
@@ -93,7 +92,7 @@ class _AuthScreenState extends State<AuthScreen> {
               SizedBox(
                 height: 8.0,
               ),
-              TextField(
+              TextFormField(
                 key: ValueKey('pasword'),
                 controller: passwordController,
                 obscureText: true,
@@ -103,12 +102,6 @@ class _AuthScreenState extends State<AuthScreen> {
                 },
                 decoration: kTextFieldDecoration.copyWith(
                   hintText: 'Enter your password',
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                        color: _hasError ? Colors.red : Colors.black54,
-                        width: 2.0),
-                    borderRadius: BorderRadius.all(Radius.circular(32.0)),
-                  ),
                 ),
               ),
               if (_registerMode)
@@ -116,7 +109,7 @@ class _AuthScreenState extends State<AuthScreen> {
                   height: 8.0,
                 ),
               if (_registerMode)
-                TextField(
+                TextFormField(
                   key: ValueKey('confirmPasword'),
                   controller: confirmPasswordController,
                   obscureText: true,
@@ -126,12 +119,6 @@ class _AuthScreenState extends State<AuthScreen> {
                   },
                   decoration: kTextFieldDecoration.copyWith(
                     hintText: 'Confirm password',
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                          color: _hasError ? Colors.red : Colors.black54,
-                          width: 2.0),
-                      borderRadius: BorderRadius.all(Radius.circular(32.0)),
-                    ),
                   ),
                 ),
               SizedBox(
@@ -174,9 +161,6 @@ class _AuthScreenState extends State<AuthScreen> {
                           backgroundColor: Theme.of(context).errorColor,
                         ),
                       );
-                      setState(() {
-                        _hasError = true;
-                      });
                       return;
                     }
                     setState(() {
