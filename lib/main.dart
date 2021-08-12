@@ -5,9 +5,8 @@ import 'package:provider/provider.dart';
 import 'package:my_money/screens/welcome_screen.dart';
 import 'screens/home_screen.dart';
 import 'screens/app_screen.dart';
-import 'screens/login_screen.dart';
+import 'screens/auth_screen.dart';
 import 'screens/welcome_screen.dart';
-import 'screens/registration_screen.dart';
 import 'providers/transactions.dart';
 
 Future<void> main() async {
@@ -52,10 +51,7 @@ class MyApp extends StatelessWidget {
         routes: {
           WelcomeScreen.id: (context) => WelcomeScreen(),
           HomeScreen.id: (context) => MainAppScreen(),
-          LoginScreen.id: (context) => LoginScreen(),
-          RegistrationScreen.id: (context) => RegistrationScreen(),
-          /*         '/records': (context) => TxList(),
-     */
+          AuthScreen.id: (context) => AuthScreen(),
         },
       ),
     );

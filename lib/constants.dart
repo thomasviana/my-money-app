@@ -8,6 +8,8 @@ final dateFormat = DateFormat('yyyy-MM-dd');
 TextEditingController newAmount = TextEditingController();
 TextEditingController newConcept = TextEditingController();
 TextEditingController newBudget = TextEditingController();
+TextEditingController passwordController = TextEditingController();
+TextEditingController confirmPasswordController = TextEditingController();
 
 const kTitleTextStyle = TextStyle(
   fontSize: 15,

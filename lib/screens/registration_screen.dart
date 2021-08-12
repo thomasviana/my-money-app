@@ -94,6 +94,16 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   }
                 },
               ),
+              SizedBox(
+                height: 10,
+              ),
+              TextButton.icon(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                icon: Icon(Icons.arrow_back_outlined),
+                label: Text('Back'),
+              ),
             ],
           ),
         ),
