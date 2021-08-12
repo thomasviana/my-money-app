@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'home_screen.dart';
 import 'package:my_money/constants.dart';
 import 'package:my_money/widgets/rounded_button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
-import 'package:my_money/constants.dart';
+import 'dart:io';
 
 class AuthScreen extends StatefulWidget {
   static const id = '/auth-screeen';
@@ -14,6 +15,7 @@ class AuthScreen extends StatefulWidget {
 }
 
 class _AuthScreenState extends State<AuthScreen> {
+  final _formKey = GlobalKey<FormState>();
   final _auth = FirebaseAuth.instance;
   late bool _registerMode = false;
   late bool _loginMode = false;
@@ -37,6 +39,51 @@ class _AuthScreenState extends State<AuthScreen> {
     super.didChangeDependencies();
   }
 
+  void showError(error) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(error, textAlign: TextAlign.center),
+        backgroundColor: Theme.of(context).errorColor,
+      ),
+    );
+    return;
+  }
+
+  Future<void> _trySubmit() async {
+    final _isValid = _formKey.currentState!.validate();
+    FocusScope.of(context).unfocus();
+
+    if (_isValid && _registerMode) {
+      setState(() {
+        showSpinner = true;
+      });
+      try {
+        final newUser = await _auth.createUserWithEmailAndPassword(
+            email: email, password: password);
+        Navigator.pushReplacementNamed(context, HomeScreen.id);
+        setState(() {
+          showSpinner = false;
+        });
+      } on PlatformException catch (e) {
+        showError(e.message);
+      }
+    } else if (_isValid && _loginMode) {
+      try {
+        final existingUser = await _auth.signInWithEmailAndPassword(
+            email: email, password: password);
+        Navigator.pushReplacementNamed(context, HomeScreen.id);
+        setState(() {
+          showSpinner = false;
+        });
+      } on PlatformException catch (e) {
+        showError(e.message);
+        print('aqui es el error');
+      }
+    }
+    passwordController.clear();
+    confirmPasswordController.clear();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,149 +95,134 @@ class _AuthScreenState extends State<AuthScreen> {
         inAsyncCall: showSpinner,
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 24.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              Flexible(
-                child: Hero(
-                  tag: 'logo',
-                  child: Container(
-                    height: 200.0,
-                    child: Icon(
-                      Icons.monetization_on_rounded,
-                      size: 200,
+          child: Form(
+            key: _formKey,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                Flexible(
+                  child: Hero(
+                    tag: 'logo',
+                    child: Container(
+                      height: 200.0,
+                      child: Icon(
+                        Icons.monetization_on_rounded,
+                        size: 200,
+                      ),
                     ),
                   ),
                 ),
-              ),
-              SizedBox(
-                width: 50,
-              ),
-              Text(
-                'My Money',
-                style: TextStyle(
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold,
+                SizedBox(
+                  width: 50,
                 ),
-                textAlign: TextAlign.center,
-              ),
-              SizedBox(
-                height: 50.0,
-              ),
-              TextFormField(
-                key: ValueKey('email'),
-                textAlign: TextAlign.center,
-                onChanged: (value) {
-                  email = value;
-                },
-                decoration: kTextFieldDecoration.copyWith(
-                  hintText: 'Enter you email',
-                  hoverColor: Colors.green,
+                Text(
+                  'My Money',
+                  style: TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  textAlign: TextAlign.center,
                 ),
-              ),
-              SizedBox(
-                height: 8.0,
-              ),
-              TextFormField(
-                key: ValueKey('pasword'),
-                controller: passwordController,
-                obscureText: true,
-                textAlign: TextAlign.center,
-                onChanged: (value) {
-                  password = value;
-                },
-                decoration: kTextFieldDecoration.copyWith(
-                  hintText: 'Enter your password',
+                SizedBox(
+                  height: 50.0,
                 ),
-              ),
-              if (_registerMode)
+                TextFormField(
+                  key: ValueKey('email'),
+                  controller: emailController,
+                  textAlign: TextAlign.center,
+                  onChanged: (value) {
+                    email = value.trim();
+                  },
+                  decoration: kTextFieldDecoration.copyWith(
+                    hintText: 'Enter you email',
+                    hoverColor: Colors.green,
+                  ),
+                  validator: (value) {
+                    if (value!.isEmpty || !value.contains('@')) {
+                      return 'Please enter a valid email address.';
+                    }
+                    return null;
+                  },
+                  keyboardType: TextInputType.emailAddress,
+                ),
                 SizedBox(
                   height: 8.0,
                 ),
-              if (_registerMode)
                 TextFormField(
-                  key: ValueKey('confirmPasword'),
-                  controller: confirmPasswordController,
+                  key: ValueKey('pasword'),
+                  controller: passwordController,
                   obscureText: true,
                   textAlign: TextAlign.center,
                   onChanged: (value) {
-                    password = value;
+                    password = value.trim();
                   },
                   decoration: kTextFieldDecoration.copyWith(
-                    hintText: 'Confirm password',
+                    hintText: 'Enter your password',
                   ),
+                  validator: _registerMode
+                      ? (value) {
+                          if (value!.isEmpty || value.length < 8) {
+                            return 'Password must be at least 8 characters long.';
+                          }
+                          return null;
+                        }
+                      : null,
                 ),
-              SizedBox(
-                height: 24.0,
-              ),
-              if (_loginMode)
+                if (_registerMode)
+                  SizedBox(
+                    height: 8.0,
+                  ),
+                if (_registerMode)
+                  TextFormField(
+                    key: ValueKey('confirmPasword'),
+                    controller: confirmPasswordController,
+                    obscureText: true,
+                    textAlign: TextAlign.center,
+                    onChanged: (value) {
+                      password = value.trim();
+                    },
+                    decoration: kTextFieldDecoration.copyWith(
+                      hintText: 'Confirm password',
+                    ),
+                    validator: _registerMode
+                        ? (value) {
+                            if (passwordController.text !=
+                                confirmPasswordController.text) {
+                              return 'Password doesn\'t match';
+                            }
+                            if (value!.isEmpty || value.length < 8) {
+                              return 'Password must be at least 8 characters long.';
+                            }
+                            return null;
+                          }
+                        : null,
+                  ),
+                SizedBox(
+                  height: 24.0,
+                ),
                 RoundedButton(
-                  buttonColor: Theme.of(context).accentColor,
-                  title: 'Log In',
-                  textStyle: TextStyle(color: Colors.black),
-                  onPressed: () async {
-                    setState(() {
-                      showSpinner = true;
-                    });
-                    try {
-                      final existingUser =
-                          await _auth.signInWithEmailAndPassword(
-                              email: email, password: password);
-                      Navigator.pushReplacementNamed(context, HomeScreen.id);
-                      setState(() {
-                        showSpinner = false;
-                      });
-                    } catch (e) {
-                      print(e);
-                    }
-                  },
+                  buttonColor: _loginMode
+                      ? Theme.of(context).accentColor
+                      : Colors.grey.shade800,
+                  title: _loginMode ? 'Log In' : 'Register',
+                  textStyle: TextStyle(
+                      color: _loginMode ? Colors.black : Colors.white),
+                  onPressed: _trySubmit,
                 ),
-              if (_registerMode)
-                RoundedButton(
-                  buttonColor: Colors.grey.shade800,
-                  title: 'Register',
-                  textStyle: TextStyle(color: Colors.white),
-                  onPressed: () async {
-                    if (passwordController.text !=
-                        confirmPasswordController.text) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text('Password doesn\'t match',
-                              textAlign: TextAlign.center),
-                          backgroundColor: Theme.of(context).errorColor,
-                        ),
-                      );
-                      return;
-                    }
+                TextButton(
+                  onPressed: () {
                     setState(() {
-                      showSpinner = true;
+                      _registerMode = !_registerMode;
+                      _loginMode = !_loginMode;
                     });
-                    try {
-                      final newUser =
-                          await _auth.createUserWithEmailAndPassword(
-                              email: email, password: password);
-                      Navigator.pushReplacementNamed(context, HomeScreen.id);
-                      setState(() {
-                        showSpinner = false;
-                      });
-                    } catch (e) {
-                      print(e);
-                    }
                   },
+                  child: Text(_loginMode
+                      ? 'Create new account'
+                      : 'I alreade have an account'),
                 ),
-              TextButton(
-                onPressed: () {
-                  setState(() {
-                    _registerMode = !_registerMode;
-                    _loginMode = !_loginMode;
-                  });
-                },
-                child: Text(_loginMode
-                    ? 'Create new account'
-                    : 'I alreade have an account'),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
