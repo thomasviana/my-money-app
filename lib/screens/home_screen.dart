@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_money/providers/auth.dart';
 import 'package:my_money/widgets/home/home_listview.dart';
 import 'package:my_money/widgets/home/home_card.dart';
 import 'package:provider/provider.dart';
@@ -21,9 +22,10 @@ class _HomeScreenState extends State<HomeScreen> {
       setState(() {
         _isLoading = true;
       });
+      final userId = Provider.of<Auth>(context).userId;
       Provider.of<Txs>(
         context,
-      ).getData().then((_) {
+      ).getData(userId).then((_) {
         setState(() {
           _isLoading = false;
         });

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'home_screen.dart';
@@ -5,7 +6,8 @@ import 'package:my_money/constants.dart';
 import 'package:my_money/widgets/rounded_button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
-import 'dart:io';
+import 'package:provider/provider.dart';
+import 'package:my_money/providers/auth.dart';
 
 class AuthScreen extends StatefulWidget {
   static const id = '/auth-screeen';
@@ -19,7 +21,7 @@ class _AuthScreenState extends State<AuthScreen> {
   final _auth = FirebaseAuth.instance;
   late bool _registerMode = false;
   late bool _loginMode = false;
-
+  late String name;
   late String email;
   late String password;
   bool showSpinner = false;
@@ -52,14 +54,12 @@ class _AuthScreenState extends State<AuthScreen> {
   Future<void> _trySubmit() async {
     final _isValid = _formKey.currentState!.validate();
     FocusScope.of(context).unfocus();
-
     if (_isValid && _registerMode) {
       setState(() {
         showSpinner = true;
       });
       try {
-        final newUser = await _auth.createUserWithEmailAndPassword(
-            email: email, password: password);
+        Provider.of<Auth>(context).login(email, password);
         Navigator.pushReplacementNamed(context, HomeScreen.id);
         setState(() {
           showSpinner = false;
@@ -69,15 +69,13 @@ class _AuthScreenState extends State<AuthScreen> {
       }
     } else if (_isValid && _loginMode) {
       try {
-        final existingUser = await _auth.signInWithEmailAndPassword(
-            email: email, password: password);
+        Provider.of<Auth>(context).signUp(name, email, password);
         Navigator.pushReplacementNamed(context, HomeScreen.id);
         setState(() {
           showSpinner = false;
         });
       } on PlatformException catch (e) {
         showError(e.message);
-        print('aqui es el error');
       }
     }
     passwordController.clear();
@@ -127,6 +125,21 @@ class _AuthScreenState extends State<AuthScreen> {
                 SizedBox(
                   height: 50.0,
                 ),
+                if (_registerMode)
+                  TextFormField(
+                    key: ValueKey('name'),
+                    textAlign: TextAlign.center,
+                    onChanged: (value) {
+                      name = value.trim();
+                    },
+                    decoration: kTextFieldDecoration.copyWith(
+                      hintText: 'Full Name',
+                      hoverColor: Colors.green,
+                    ),
+                  ),
+                SizedBox(
+                  height: 8.0,
+                ),
                 TextFormField(
                   key: ValueKey('email'),
                   controller: emailController,
@@ -135,7 +148,7 @@ class _AuthScreenState extends State<AuthScreen> {
                     email = value.trim();
                   },
                   decoration: kTextFieldDecoration.copyWith(
-                    hintText: 'Enter you email',
+                    hintText: 'Enter your email',
                     hoverColor: Colors.green,
                   ),
                   validator: (value) {
@@ -158,7 +171,7 @@ class _AuthScreenState extends State<AuthScreen> {
                     password = value.trim();
                   },
                   decoration: kTextFieldDecoration.copyWith(
-                    hintText: 'Enter your password',
+                    hintText: 'Enter password',
                   ),
                   validator: _registerMode
                       ? (value) {

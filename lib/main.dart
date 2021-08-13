@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:my_money/providers/auth.dart';
 import 'package:provider/provider.dart';
 
 import 'package:my_money/screens/welcome_screen.dart';
@@ -26,8 +27,15 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<Txs>(
-      create: (context) => Txs(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<Auth>(
+          create: (context) => Auth(),
+        ),
+        ChangeNotifierProvider<Txs>(
+          create: (context) => Txs(),
+        ),
+      ],
       child: MaterialApp(
         title: 'My Money App',
         theme: ThemeData(

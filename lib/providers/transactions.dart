@@ -16,9 +16,11 @@ class Txs extends ChangeNotifier {
     return _items.firstWhere((tx) => tx.id == id);
   }
 
-  Future<void> getData() async {
-    QuerySnapshot querySnapshot =
-        await _fireStore.collection('tx').orderBy('date').get();
+  Future<void> getData(String userId) async {
+    QuerySnapshot querySnapshot = await _fireStore
+        .collection('users/$userId/transactions')
+        .orderBy('date')
+        .get();
     final allData = querySnapshot.docs;
 
     List<Tx> txList = [];

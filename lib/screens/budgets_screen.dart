@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_money/providers/auth.dart';
 import 'package:my_money/widgets/budgets/budget_cards.dart';
 import 'package:my_money/providers/transactions.dart';
 import 'package:my_money/widgets/budgets/budgets_grid.dart';
@@ -26,9 +27,10 @@ class _BudgetsScreenState extends State<BudgetsScreen> {
       setState(() {
         _isLoading = true;
       });
+      final userId = Provider.of<Auth>(context, listen: false).userId;
       Provider.of<Txs>(
         context,
-      ).getData().then((_) {
+      ).getData(userId).then((_) {
         setState(() {
           _isLoading = false;
         });
