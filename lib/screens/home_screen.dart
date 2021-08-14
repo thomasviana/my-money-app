@@ -45,6 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                Consumer<Auth>(builder: (ctx, auth, ch) => Text('Hi')),
                 Container(
                   padding: EdgeInsets.only(bottom: 20, top: 30),
                   child: Hero(

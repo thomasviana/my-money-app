@@ -47,8 +47,8 @@ class Txs extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> addTx(Tx newTx) async {
-    FirebaseFirestore.instance.collection('tx').add(
+  Future<void> addTx(String userId, Tx newTx) async {
+    FirebaseFirestore.instance.collection('users/$userId/transactions').add(
       {
         'title': newTx.title,
         'tag': newTx.tag,
@@ -61,9 +61,12 @@ class Txs extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> deletTx(String id) async {
+  Future<void> deletTx(String userId, String id) async {
     final txIndex = _items.indexWhere((tx) => tx.id == id);
-    await FirebaseFirestore.instance.collection('tx').doc('txIndex').delete();
+    await FirebaseFirestore.instance
+        .collection('users/$userId/transactions')
+        .doc('txIndex')
+        .delete();
     _items.removeAt(txIndex);
     notifyListeners();
     _items.removeWhere((tx) => tx.id == id);

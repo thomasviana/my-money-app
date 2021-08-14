@@ -55,11 +55,14 @@ class _AuthScreenState extends State<AuthScreen> {
     final _isValid = _formKey.currentState!.validate();
     FocusScope.of(context).unfocus();
     if (_isValid && _registerMode) {
+      print("registerMode");
+      print(email);
       setState(() {
         showSpinner = true;
       });
       try {
-        Provider.of<Auth>(context).login(email, password);
+        await Provider.of<Auth>(context, listen: false)
+            .signUp(name, email, password);
         Navigator.pushReplacementNamed(context, HomeScreen.id);
         setState(() {
           showSpinner = false;
@@ -68,8 +71,10 @@ class _AuthScreenState extends State<AuthScreen> {
         showError(e.message);
       }
     } else if (_isValid && _loginMode) {
+      print("loginMode");
+
       try {
-        Provider.of<Auth>(context).signUp(name, email, password);
+        await Provider.of<Auth>(context, listen: false).login(email, password);
         Navigator.pushReplacementNamed(context, HomeScreen.id);
         setState(() {
           showSpinner = false;

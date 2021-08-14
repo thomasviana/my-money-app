@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:my_money/screens/auth_screen.dart';
-import 'login_screen.dart';
-import 'registration_screen.dart';
 import 'package:my_money/widgets/rounded_button.dart';
 
 class WelcomeScreen extends StatelessWidget {

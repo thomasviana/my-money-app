@@ -62,15 +62,15 @@ class _AddRecordState extends State<AddRecord> {
       type: currentValue == 0 ? 'Expense' : 'Income',
     );
 
-    final userId = Provider.of<Auth>(context).userId;
-    await Provider.of<Txs>(context, listen: false).addTx(_editedTx);
+    final userId = Provider.of<Auth>(context, listen: false).userId;
+    print(userId);
+    await Provider.of<Txs>(context, listen: false).addTx(userId, _editedTx);
     await Provider.of<Txs>(context, listen: false).getData(userId);
 
     newAmount.clear();
     newConcept.clear();
     newBudget.clear();
     print(_editedTx.title);
-    print(dateTime);
   }
 
   @override

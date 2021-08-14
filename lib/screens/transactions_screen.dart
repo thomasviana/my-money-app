@@ -28,6 +28,7 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
         _isLoading = true;
       });
       final userId = Provider.of<Auth>(context, listen: false).userId;
+      print(userId);
       Provider.of<Txs>(
         context,
       ).getData(userId).then((_) {

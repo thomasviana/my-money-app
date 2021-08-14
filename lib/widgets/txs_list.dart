@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_money/providers/auth.dart';
 import 'package:my_money/providers/transactions.dart';
 import 'package:provider/provider.dart';
 
@@ -11,7 +12,8 @@ import 'package:my_money/constants.dart';
 
 class TxsList extends StatelessWidget {
   void deletTx(BuildContext context, String id) {
-    Provider.of<Txs>(context, listen: false).deletTx(id);
+    final userId = Provider.of<Auth>(context, listen: false).userId;
+    Provider.of<Txs>(context, listen: false).deletTx(userId, id);
   }
 
   @override

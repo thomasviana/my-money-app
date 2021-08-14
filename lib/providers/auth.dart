@@ -5,6 +5,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class Auth with ChangeNotifier {
   final _auth = FirebaseAuth.instance;
   late String userId;
+  late String userName;
+
+  // Future<void> FetchUserData() async {
+  //   final userData = await FirebaseFirestore.instance.collection('users').doc().get();
+  //   print(userData)
+  // }
 
   Future<void> login(String email, String password) async {
     final existingUser = await _auth.signInWithEmailAndPassword(
@@ -24,6 +30,7 @@ class Auth with ChangeNotifier {
       'email': email,
     });
     userId = newUser.user!.uid;
+    userName = name;
     notifyListeners();
   }
 }
