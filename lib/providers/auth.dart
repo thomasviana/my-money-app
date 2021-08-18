@@ -4,18 +4,44 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Auth with ChangeNotifier {
   final _auth = FirebaseAuth.instance;
-  late String userId;
-  late String userName;
+  String? _token;
+  // DateTime _expiryDate;
+  late String _userId = '';
+  late String _userName;
 
-  // Future<void> FetchUserData() async {
-  //   final userData = await FirebaseFirestore.instance.collection('users').doc().get();
-  //   print(userData)
+  // bool get isAuth {
+  //   return token != null;
   // }
+
+  // String? get token {
+  //   if (_expiryDate.isAfter(DateTime.now())) {
+  //     return _token;
+  //   }
+  // }
+
+  String get userId {
+    return _userId;
+  }
+
+  String get userName {
+    return _userName;
+  }
+
+  Future<void> fetchUserData() async {
+    final userData = await FirebaseAuth.instance.currentUser;
+    _userId = userData!.uid;
+    print(userId);
+
+    notifyListeners();
+  }
 
   Future<void> login(String email, String password) async {
     final existingUser = await _auth.signInWithEmailAndPassword(
         email: email, password: password);
-    userId = existingUser.user!.uid;
+    _userId = existingUser.user!.uid;
+    final userData =
+        await FirebaseFirestore.instance.collection('users').doc(userId).get();
+    _userName = userData['name'];
     notifyListeners();
   }
 
@@ -29,8 +55,8 @@ class Auth with ChangeNotifier {
       'name': name,
       'email': email,
     });
-    userId = newUser.user!.uid;
-    userName = name;
+    _userId = newUser.user!.uid;
+    _userName = name;
     notifyListeners();
   }
 }

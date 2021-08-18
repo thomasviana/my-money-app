@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:my_money/providers/auth.dart';
 import 'package:my_money/widgets/home/home_listview.dart';
@@ -15,6 +16,20 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   var _isInit = true;
   var _isLoading = false;
+  String? _userName = '';
+  late User user;
+
+  @override
+  void initState() {
+    super.initState();
+    onRefresh(FirebaseAuth.instance.currentUser);
+  }
+
+  onRefresh(userCred) {
+    setState(() {
+      user = userCred;
+    });
+  }
 
   @override
   void didChangeDependencies() {
@@ -22,14 +37,16 @@ class _HomeScreenState extends State<HomeScreen> {
       setState(() {
         _isLoading = true;
       });
-      final userId = Provider.of<Auth>(context).userId;
+      print('Error aqui');
+      final userData = Provider.of<Auth>(context, listen: false);
       Provider.of<Txs>(
         context,
-      ).getData(userId).then((_) {
+      ).getData(userData.userId).then((_) {
         setState(() {
           _isLoading = false;
         });
       });
+      _userName = userData.userName;
     }
     _isInit = false;
     super.didChangeDependencies();
@@ -45,7 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Consumer<Auth>(builder: (ctx, auth, ch) => Text('Hi')),
+                Text('Hi, $_userName', style: TextStyle(fontSize: 15)),
                 Container(
                   padding: EdgeInsets.only(bottom: 20, top: 30),
                   child: Hero(
