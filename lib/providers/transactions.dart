@@ -17,6 +17,7 @@ class Txs extends ChangeNotifier {
   }
 
   Future<void> getData(String userId) async {
+    print('My userID is $userId');
     QuerySnapshot querySnapshot = await _fireStore
         .collection('users/$userId/transactions')
         .orderBy('date')

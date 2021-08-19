@@ -17,6 +17,7 @@ class _HomeScreenState extends State<HomeScreen> {
   var _isInit = true;
   var _isLoading = false;
   String? _userName = '';
+  String? _userId;
   late User user;
 
   @override
@@ -37,8 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
       setState(() {
         _isLoading = true;
       });
-      print('Error aqui');
-      final userData = Provider.of<Auth>(context, listen: false);
+      var userData = Provider.of<Auth>(context);
       Provider.of<Txs>(
         context,
       ).getData(userData.userId).then((_) {
@@ -46,7 +46,10 @@ class _HomeScreenState extends State<HomeScreen> {
           _isLoading = false;
         });
       });
+      _userId = userData.userId;
       _userName = userData.userName;
+      print(_userId);
+      print(user.uid);
     }
     _isInit = false;
     super.didChangeDependencies();
@@ -60,9 +63,16 @@ class _HomeScreenState extends State<HomeScreen> {
           Container(
             padding: EdgeInsets.only(top: 60, left: 30, right: 30, bottom: 30),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Text('Hi, $_userName', style: TextStyle(fontSize: 15)),
+                Text(
+                  'Hi, $_userName',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  textAlign: TextAlign.start,
+                ),
                 Container(
                   padding: EdgeInsets.only(bottom: 20, top: 30),
                   child: Hero(
@@ -82,6 +92,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     fontSize: 40,
                     fontWeight: FontWeight.bold,
                   ),
+                  textAlign: TextAlign.center,
                 ),
                 SizedBox(
                   height: 0,

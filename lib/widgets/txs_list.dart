@@ -10,22 +10,28 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:my_money/constants.dart';
 
+import 'date_filter.dart';
+
 class TxsList extends StatelessWidget {
   void deletTx(BuildContext context, String id) {
     final userId = Provider.of<Auth>(context, listen: false).userId;
     Provider.of<Txs>(context, listen: false).deletTx(userId, id);
   }
 
+  void selectMonth() {
+    var selectedMonth = "September";
+  }
+
   @override
   Widget build(BuildContext context) {
     final txsData = Provider.of<Txs>(context);
     final transactions = txsData.items;
-    return Column(
-      children: [
-        Expanded(
-          child: ListView.builder(
-            itemCount: transactions.length,
-            itemBuilder: (context, index) {
+    return CustomScrollView(
+      slivers: [
+        DateFilter(),
+        SliverList(
+          delegate: SliverChildBuilderDelegate(
+            (context, index) {
               return Slidable(
                 actionPane: SlidableDrawerActionPane(),
                 secondaryActions: <Widget>[
@@ -82,8 +88,9 @@ class TxsList extends StatelessWidget {
                 ),
               );
             },
+            childCount: transactions.length,
           ),
-        ),
+        )
       ],
     );
   }

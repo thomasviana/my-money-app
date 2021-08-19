@@ -21,34 +21,6 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
   var _isInit = true;
   var _isLoading = false;
   late User user;
-  @override
-  void initState() {
-    super.initState();
-    onRefresh();
-  }
-
-  onRefresh() {
-    final userCred = FirebaseAuth.instance.currentUser;
-    setState(() {
-      user = userCred!;
-    });
-  }
-
-  // @override
-  // void didChangeDependencies() {
-  //   if (_isInit) {
-  //     setState(() {
-  //       _isLoading = true;
-  //     });
-  //     onRefresh().then((_) {
-  //       setState(() {
-  //         _isLoading = false;
-  //       });
-  //     });
-  //   }
-  //   _isInit = false;
-  //   super.didChangeDependencies();
-  // }
 
   final currency = NumberFormat("#,##0.00", "en_US");
 

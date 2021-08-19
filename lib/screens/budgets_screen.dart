@@ -4,6 +4,7 @@ import 'package:my_money/widgets/budgets/budget_cards.dart';
 import 'package:my_money/providers/transactions.dart';
 import 'package:my_money/widgets/budgets/budgets_grid.dart';
 import 'package:provider/provider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class BudgetsScreen extends StatefulWidget {
   static const id = 'home_screen';
@@ -20,6 +21,19 @@ class BudgetsScreen extends StatefulWidget {
 class _BudgetsScreenState extends State<BudgetsScreen> {
   var _isInit = true;
   var _isLoading = false;
+  late User user;
+
+  @override
+  void initState() {
+    super.initState();
+    onRefresh(FirebaseAuth.instance.currentUser);
+  }
+
+  onRefresh(userCred) {
+    setState(() {
+      user = userCred;
+    });
+  }
 
   @override
   void didChangeDependencies() {

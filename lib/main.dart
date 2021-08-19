@@ -13,6 +13,7 @@ import 'providers/transactions.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  Auth().fetchUserData();
   // WidgetsFlutterBinding.ensureInitialized();
   // SystemChrome.setPreferredOrientations(
   //   [
@@ -29,11 +30,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider.value(
-          value: Auth(),
+        ChangeNotifierProvider(
+          create: (ctx) => Auth(),
         ),
-        ChangeNotifierProvider.value(
-          value: Txs(),
+        ChangeNotifierProvider(
+          create: (ctx) => Txs(),
         ),
       ],
       child: MaterialApp(

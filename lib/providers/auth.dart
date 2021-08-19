@@ -5,19 +5,19 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class Auth with ChangeNotifier {
   final _auth = FirebaseAuth.instance;
   String? _token;
-  // DateTime _expiryDate;
+  late DateTime _expiryDate;
   late String _userId = '';
   late String _userName;
 
-  // bool get isAuth {
-  //   return token != null;
-  // }
+  bool get isAuth {
+    return token != null;
+  }
 
-  // String? get token {
-  //   if (_expiryDate.isAfter(DateTime.now())) {
-  //     return _token;
-  //   }
-  // }
+  String? get token {
+    if (_expiryDate.isAfter(DateTime.now())) {
+      return _token;
+    }
+  }
 
   String get userId {
     return _userId;
@@ -28,10 +28,9 @@ class Auth with ChangeNotifier {
   }
 
   Future<void> fetchUserData() async {
-    final userData = await FirebaseAuth.instance.currentUser;
+    final userData = FirebaseAuth.instance.currentUser;
     _userId = userData!.uid;
     print(userId);
-
     notifyListeners();
   }
 
