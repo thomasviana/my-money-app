@@ -21,8 +21,14 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
   var _isInit = true;
   var _isLoading = false;
   late User user;
-
   final currency = NumberFormat("#,##0.00", "en_US");
+
+  @override
+  void initState() {
+    super.initState();
+    Provider.of<Txs>(context, listen: false).getData(kThisMonth);
+    print('this month is $kThisMonth');
+  }
 
   @override
   Widget build(BuildContext context) {

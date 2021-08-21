@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:my_money/providers/auth.dart';
-import 'package:my_money/widgets/budgets/budget_cards.dart';
 import 'package:my_money/providers/transactions.dart';
 import 'package:my_money/widgets/budgets/budgets_grid.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:my_money/constants.dart';
 
 class BudgetsScreen extends StatefulWidget {
   static const id = 'home_screen';
@@ -44,7 +44,7 @@ class _BudgetsScreenState extends State<BudgetsScreen> {
       final userId = Provider.of<Auth>(context, listen: false).userId;
       Provider.of<Txs>(
         context,
-      ).getData(userId).then((_) {
+      ).getData(kThisMonth).then((_) {
         setState(() {
           _isLoading = false;
         });

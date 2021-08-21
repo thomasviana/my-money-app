@@ -33,8 +33,11 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (ctx) => Auth(),
         ),
-        ChangeNotifierProvider(
-          create: (ctx) => Txs(),
+        ChangeNotifierProxyProvider<Auth, Txs>(
+          create: (ctx) => Txs(Provider.of<Auth>(ctx, listen: false).userId),
+          update: (ctx, auth, previousTx) => Txs(
+            auth.userId,
+          ),
         ),
       ],
       child: MaterialApp(

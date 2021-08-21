@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:my_money/providers/transactions.dart';
+import 'package:my_money/constants.dart';
 
 class DateFilter extends StatefulWidget {
   @override
@@ -46,6 +49,10 @@ class _DateFilterState extends State<DateFilter> {
     print(_monthIndex);
   }
 
+  void getMonthIndex() {
+    Provider.of<Txs>(context, listen: false).getData(_monthIndex);
+  }
+
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
@@ -56,6 +63,7 @@ class _DateFilterState extends State<DateFilter> {
       leading: IconButton(
         onPressed: () {
           selectMonth('back');
+          getMonthIndex();
         },
         icon: Icon(Icons.arrow_back_ios),
       ),
@@ -64,6 +72,7 @@ class _DateFilterState extends State<DateFilter> {
         IconButton(
           onPressed: () {
             selectMonth('forward');
+            getMonthIndex();
           },
           icon: Icon(Icons.arrow_forward_ios),
         ),

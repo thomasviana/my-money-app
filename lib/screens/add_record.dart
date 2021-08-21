@@ -62,10 +62,11 @@ class _AddRecordState extends State<AddRecord> {
       type: currentValue == 0 ? 'Expense' : 'Income',
     );
 
+    final now = DateTime.now().month;
     final userId = Provider.of<Auth>(context, listen: false).userId;
     print(userId);
     await Provider.of<Txs>(context, listen: false).addTx(userId, _editedTx);
-    await Provider.of<Txs>(context, listen: false).getData(userId);
+    await Provider.of<Txs>(context, listen: false).getData(kThisMonth);
 
     newAmount.clear();
     newConcept.clear();

@@ -2,9 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:my_money/providers/auth.dart';
 import 'package:my_money/widgets/home/home_listview.dart';
-import 'package:my_money/widgets/home/home_card.dart';
 import 'package:provider/provider.dart';
 import 'package:my_money/providers/transactions.dart';
+import 'package:my_money/constants.dart';
 
 class HomeScreen extends StatefulWidget {
   static const id = 'home_screen';
@@ -41,7 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
       var userData = Provider.of<Auth>(context);
       Provider.of<Txs>(
         context,
-      ).getData(userData.userId).then((_) {
+      ).getData(kThisMonth).then((_) {
         setState(() {
           _isLoading = false;
         });

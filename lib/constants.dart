@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 
 final currency = NumberFormat("#,##0.00", "en_US");
 final dateFormat = DateFormat('yyyy-MM-dd');
+final kThisMonth = DateTime.now().month - 1;
 
 TextEditingController newAmount = TextEditingController();
 TextEditingController newConcept = TextEditingController();

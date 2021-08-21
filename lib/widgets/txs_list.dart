@@ -18,10 +18,6 @@ class TxsList extends StatelessWidget {
     Provider.of<Txs>(context, listen: false).deletTx(userId, id);
   }
 
-  void selectMonth() {
-    var selectedMonth = "September";
-  }
-
   @override
   Widget build(BuildContext context) {
     final txsData = Provider.of<Txs>(context);
