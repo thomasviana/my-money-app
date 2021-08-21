@@ -50,7 +50,10 @@ class MapScreenState extends State<SettingsScreen>
                       padding: EdgeInsets.only(
                         top: 20.0,
                       ),
+
                       child: UserImagePicker(),
+
+
                     )
                   ],
                 ),

@@ -222,6 +222,16 @@ PODS:
     - Firebase/Firestore (= 8.3.0)
     - firebase_core
     - Flutter
+<<<<<<< HEAD
+  - Firebase/Auth (8.0.0):
+    - Firebase/CoreOnly
+    - FirebaseAuth (~> 8.0.0)
+  - Firebase/CoreOnly (8.0.0):
+    - FirebaseCore (= 8.0.0)
+  - Firebase/Firestore (8.0.0):
+    - Firebase/CoreOnly
+    - FirebaseFirestore (~> 8.0.0)
+=======
   - Firebase/Auth (8.3.0):
     - Firebase/CoreOnly
     - FirebaseAuth (~> 8.3.0)
@@ -230,6 +240,7 @@ PODS:
   - Firebase/Firestore (8.3.0):
     - Firebase/CoreOnly
     - FirebaseFirestore (~> 8.3.0)
+>>>>>>> test
   - firebase_auth (1.4.1):
     - Firebase/Auth (= 8.3.0)
     - firebase_core
@@ -237,7 +248,11 @@ PODS:
   - firebase_core (1.4.0):
     - Firebase/CoreOnly (= 8.3.0)
     - Flutter
+<<<<<<< HEAD
+  - FirebaseAuth (8.0.0):
+=======
   - FirebaseAuth (8.3.0):
+>>>>>>> test
     - FirebaseCore (~> 8.0)
     - GoogleUtilities/AppDelegateSwizzler (~> 7.4)
     - GoogleUtilities/Environment (~> 7.4)
@@ -363,6 +378,16 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   abseil: 6c8eb7892aefa08d929b39f9bb108e5367e3228f
   BoringSSL-GRPC: 8edf627ee524575e2f8d19d56f068b448eea3879
+<<<<<<< HEAD
+  cloud_firestore: 0e708a57ee3e13a56cf6a6fdaf085d5edb1e7e0f
+  Firebase: 73c3e3b216ec1ecbc54d2ffdd4670c65c749edb1
+  firebase_auth: 6532658f5a4f76be32cd5e7518753ebedd4544d2
+  firebase_core: cda81ae37eda6df2bc2d16027fda527987c4bd33
+  FirebaseAuth: b8cd992fca5b53dc6eec09e873a3f375f000c5a1
+  FirebaseCore: 3f09591d51292843e2a46f18358d60bf4e996255
+  FirebaseCoreDiagnostics: cad03be1904b975f845e632f2720c3337da27faf
+  FirebaseFirestore: 7f6576eaca9f821e864c3e917d68aa99f4e6b613
+=======
   cloud_firestore: d6c77e2b33f00576fed2b070fec1be58d7e5f276
   Firebase: 817b9171d0d51dccc458b94a5e8edff6b1dd323d
   firebase_auth: 5d48a6c2c9de6d8f7946269ef904136298c6aa12
@@ -371,6 +396,7 @@ SPEC CHECKSUMS:
   FirebaseCore: a6dba751680d7033b9d3831e1cfc95ead0605118
   FirebaseCoreDiagnostics: cad03be1904b975f845e632f2720c3337da27faf
   FirebaseFirestore: f4f42828c6d82f6945575611c23dd343e0e7d0aa
+>>>>>>> test
   Flutter: 434fef37c0980e73bb6479ef766c45957d4b510c
   GoogleDataTransport: 85fd18ff3019bb85d3f2c551d04c481dedf71fc9
   GoogleUtilities: eea970f4a389963963bffe8d8fabe43540678b9c
@@ -383,6 +409,10 @@ SPEC CHECKSUMS:
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
   PromisesObjC: 68159ce6952d93e17b2dfe273b8c40907db5ba58
 
+<<<<<<< HEAD
+PODFILE CHECKSUM: a75497545d4391e2d394c3668e20cfb1c2bbd4aa
+=======
 PODFILE CHECKSUM: fe0e1ee7f3d1f7d00b11b474b62dd62134535aea
+>>>>>>> test
 
 COCOAPODS: 1.10.2

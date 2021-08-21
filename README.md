@@ -1,16 +1,15 @@
-# my_money
 
-A new Flutter project.
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
+### MyMoney | by Thomas Viana
 
-A few resources to get you started if this is your first Flutter project:
+------------
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+#### PERSONAL FINANCES APP
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
+**This is an app that alows people to track their incomes and expenses, manage budgets an much more.**
+
+I'm putting in practice things that i learn in courses in my own project related to a topic that i love witch is the personal finances control. Provider Package, Firebase Auth, Cloud Firestore, diferent cool widgets and animations.
+
+> I love how tecnologies are used to create a different solutions to the world. That makes me a happier developer.

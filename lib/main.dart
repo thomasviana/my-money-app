@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/services.dart';
 import 'package:my_money/providers/auth.dart';
 import 'package:provider/provider.dart';
-
 import 'package:my_money/screens/welcome_screen.dart';
 import 'screens/home_screen.dart';
 import 'screens/app_screen.dart';
@@ -15,12 +15,12 @@ Future<void> main() async {
   await Firebase.initializeApp();
   Auth().fetchUserData();
   // WidgetsFlutterBinding.ensureInitialized();
-  // SystemChrome.setPreferredOrientations(
-  //   [
-  //     DeviceOrientation.portraitUp,
-  //     DeviceOrientation.portraitDown,
-  //   ],
-  // );
+  SystemChrome.setPreferredOrientations(
+    [
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ],
+  );
   runApp(MyApp());
 }
 
