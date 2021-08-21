@@ -1,8 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:my_money/providers/auth.dart';
 import 'package:my_money/widgets/home/home_listview.dart';
-import 'package:my_money/widgets/home/home_card.dart';
 import 'package:provider/provider.dart';
 import 'package:my_money/providers/transactions.dart';
+import 'package:my_money/constants.dart';
 
 class HomeScreen extends StatefulWidget {
   static const id = 'home_screen';
@@ -14,6 +16,21 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   var _isInit = true;
   var _isLoading = false;
+  String? _userName = '';
+  String? _userId;
+  late User user;
+
+  @override
+  void initState() {
+    super.initState();
+    onRefresh(FirebaseAuth.instance.currentUser);
+  }
+
+  onRefresh(userCred) {
+    setState(() {
+      user = userCred;
+    });
+  }
 
   @override
   void didChangeDependencies() {
@@ -21,13 +38,18 @@ class _HomeScreenState extends State<HomeScreen> {
       setState(() {
         _isLoading = true;
       });
+      var userData = Provider.of<Auth>(context);
       Provider.of<Txs>(
         context,
-      ).getData().then((_) {
+      ).getData(kThisMonth).then((_) {
         setState(() {
           _isLoading = false;
         });
       });
+      _userId = userData.userId;
+      _userName = userData.userName;
+      print(_userId);
+      print(user.uid);
     }
     _isInit = false;
     super.didChangeDependencies();
@@ -41,8 +63,16 @@ class _HomeScreenState extends State<HomeScreen> {
           Container(
             padding: EdgeInsets.only(top: 60, left: 30, right: 30, bottom: 30),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
+                Text(
+                  'Hi, $_userName',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  textAlign: TextAlign.start,
+                ),
                 Container(
                   padding: EdgeInsets.only(bottom: 20, top: 30),
                   child: Hero(
@@ -62,6 +92,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     fontSize: 40,
                     fontWeight: FontWeight.bold,
                   ),
+                  textAlign: TextAlign.center,
                 ),
                 SizedBox(
                   height: 0,

@@ -10,8 +10,8 @@ import 'package:my_money/constants.dart';
 import 'package:provider/provider.dart';
 import 'package:my_money/models/transaction.dart';
 import 'package:intl/intl.dart';
+import 'package:my_money/providers/auth.dart';
 
-final _fireStore = FirebaseFirestore.instance;
 User? loggedInUser;
 
 // ignore: must_be_immutable
@@ -62,14 +62,16 @@ class _AddRecordState extends State<AddRecord> {
       type: currentValue == 0 ? 'Expense' : 'Income',
     );
 
-    await Provider.of<Txs>(context, listen: false).addTx(_editedTx);
-    await Provider.of<Txs>(context, listen: false).getData();
+    final now = DateTime.now().month;
+    final userId = Provider.of<Auth>(context, listen: false).userId;
+    print(userId);
+    await Provider.of<Txs>(context, listen: false).addTx(userId, _editedTx);
+    await Provider.of<Txs>(context, listen: false).getData(kThisMonth);
 
     newAmount.clear();
     newConcept.clear();
     newBudget.clear();
     print(_editedTx.title);
-    print(dateTime);
   }
 
   @override

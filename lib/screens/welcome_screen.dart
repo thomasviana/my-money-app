@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'login_screen.dart';
-import 'registration_screen.dart';
+import 'package:my_money/screens/auth_screen.dart';
 import 'package:my_money/widgets/rounded_button.dart';
 
 class WelcomeScreen extends StatelessWidget {
@@ -42,7 +41,9 @@ class WelcomeScreen extends StatelessWidget {
               title: 'Log In',
               textStyle: TextStyle(color: Colors.black),
               onPressed: () {
-                Navigator.pushNamed(context, LoginScreen.id);
+                String loginMode = 'LoginMode';
+                Navigator.pushNamed(context, AuthScreen.id,
+                    arguments: loginMode);
               },
             ),
             SizedBox(
@@ -54,7 +55,9 @@ class WelcomeScreen extends StatelessWidget {
               title: 'Register',
               textStyle: TextStyle(color: Colors.white),
               onPressed: () {
-                Navigator.pushNamed(context, RegistrationScreen.id);
+                String registerMode = 'RegisterMode';
+                Navigator.pushNamed(context, AuthScreen.id,
+                    arguments: registerMode);
               },
             ),
           ],

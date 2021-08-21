@@ -6,6 +6,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 final _fireStore = FirebaseFirestore.instance;
 
 class Txs extends ChangeNotifier {
+  final String userId;
+
+  Txs(this.userId);
+
   List<Tx> _items = [];
 
   List<Tx> get items {
@@ -16,9 +20,12 @@ class Txs extends ChangeNotifier {
     return _items.firstWhere((tx) => tx.id == id);
   }
 
-  Future<void> getData() async {
-    QuerySnapshot querySnapshot =
-        await _fireStore.collection('tx').orderBy('date').get();
+  Future<void> getData(int monthIndex) async {
+    print('My userID is $userId');
+    QuerySnapshot querySnapshot = await _fireStore
+        .collection('users/$userId/transactions')
+        .orderBy('date')
+        .get();
     final allData = querySnapshot.docs;
 
     List<Tx> txList = [];
@@ -34,19 +41,23 @@ class Txs extends ChangeNotifier {
         title: txTitle,
         tag: txTag,
         amount: txAmount,
-        // date: DateFormat.MMMd().add_jm().format((txDate.toDate())).toString(),
         date: txDate,
         id: txId,
         type: txType,
       );
-      txList.add(newTx);
+
+      if (newTx.date.toDate().month - 1 == monthIndex) {
+        txList.add(newTx);
+      }
+      print(newTx.date.toDate().month - 1);
+      print(monthIndex);
     }
     _items = txList;
     notifyListeners();
   }
 
-  Future<void> addTx(Tx newTx) async {
-    FirebaseFirestore.instance.collection('tx').add(
+  Future<void> addTx(String userId, Tx newTx) async {
+    FirebaseFirestore.instance.collection('users/$userId/transactions').add(
       {
         'title': newTx.title,
         'tag': newTx.tag,
@@ -59,9 +70,12 @@ class Txs extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> deletTx(String id) async {
+  Future<void> deletTx(String userId, String id) async {
     final txIndex = _items.indexWhere((tx) => tx.id == id);
-    await FirebaseFirestore.instance.collection('tx').doc('txIndex').delete();
+    await FirebaseFirestore.instance
+        .collection('users/$userId/transactions')
+        .doc('txIndex')
+        .delete();
     _items.removeAt(txIndex);
     notifyListeners();
     _items.removeWhere((tx) => tx.id == id);

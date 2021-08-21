@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
+import 'package:my_money/providers/auth.dart';
 import 'package:provider/provider.dart';
-
 import 'package:my_money/screens/welcome_screen.dart';
 import 'screens/home_screen.dart';
 import 'screens/app_screen.dart';
-import 'screens/login_screen.dart';
+import 'screens/auth_screen.dart';
 import 'screens/welcome_screen.dart';
-import 'screens/registration_screen.dart';
 import 'providers/transactions.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  Txs().getData();
+  Auth().fetchUserData();
   // WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations(
     [
@@ -29,8 +28,18 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<Txs>(
-      create: (context) => Txs(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (ctx) => Auth(),
+        ),
+        ChangeNotifierProxyProvider<Auth, Txs>(
+          create: (ctx) => Txs(Provider.of<Auth>(ctx, listen: false).userId),
+          update: (ctx, auth, previousTx) => Txs(
+            auth.userId,
+          ),
+        ),
+      ],
       child: MaterialApp(
         title: 'My Money App',
         theme: ThemeData(
@@ -53,10 +62,7 @@ class MyApp extends StatelessWidget {
         routes: {
           WelcomeScreen.id: (context) => WelcomeScreen(),
           HomeScreen.id: (context) => MainAppScreen(),
-          LoginScreen.id: (context) => LoginScreen(),
-          RegistrationScreen.id: (context) => RegistrationScreen(),
-          /*         '/records': (context) => TxList(),
-     */
+          AuthScreen.id: (context) => AuthScreen(),
         },
       ),
     );

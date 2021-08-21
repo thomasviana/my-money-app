@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:my_money/widgets/pickers/user_image_picker.dart';
 
 final _auth = FirebaseAuth.instance;
 
@@ -49,42 +50,7 @@ class MapScreenState extends State<SettingsScreen>
                       padding: EdgeInsets.only(
                         top: 20.0,
                       ),
-                      child: Stack(fit: StackFit.loose, children: [
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Container(
-                              width: 140.0,
-                              height: 140.0,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                image: DecorationImage(
-                                  image: ExactAssetImage(
-                                      'assets/images/no-photo.png'),
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        Padding(
-                            padding: EdgeInsets.only(top: 90.0, right: 100.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                CircleAvatar(
-                                  backgroundColor:
-                                      Theme.of(context).accentColor,
-                                  radius: 25.0,
-                                  child: Icon(
-                                    Icons.camera_alt,
-                                    color: Colors.black,
-                                  ),
-                                )
-                              ],
-                            )),
-                      ]),
+                      child: UserImagePicker(),
                     )
                   ],
                 ),
