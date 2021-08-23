@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:my_money/providers/transactions.dart';
-import 'package:my_money/constants.dart';
 
 class DateFilter extends StatefulWidget {
   @override
